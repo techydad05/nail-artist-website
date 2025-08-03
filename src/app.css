@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-4xl font-bold mb-4 text-white;
+  }
+  
+  h2 {
+    @apply text-3xl font-bold mb-3 text-white;
+  }
+  
+  h3 {
+    @apply text-2xl font-bold mb-2 text-white;
+  }
+  
+  p {
+    @apply mb-4 text-gray-300;
+  }
+  
+  .btn {
+    @apply font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary to-purple-600 text-white hover:from-purple-600 hover:to-primary shadow-lg hover:shadow-xl;
+  }
+  
+  .btn-secondary {
+    @apply bg-gradient-to-r from-secondary to-pink-600 text-white hover:from-pink-600 hover:to-secondary shadow-lg hover:shadow-xl;
+  }
+
+  .btn-accent {
+    @apply bg-gradient-to-r from-accent to-blue-500 text-white hover:from-blue-500 hover:to-accent shadow-lg hover:shadow-xl;
+  }
+}
+
+body {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #8b5cf6, #ec4899);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #7c3aed, #db2777);
+}
+
+/* Glowing text effect */
+.glow-text {
+  text-shadow: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.3), 0 0 30px rgba(139, 92, 246, 0.2);
+}
+
+/* Card hover effect */
+.hover-card {
+  transition: all 0.3s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+}
