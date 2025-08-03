@@ -1,0 +1,35 @@
+# Coolify deployment configuration
+# This file helps configure your application for Coolify deployment
+
+version: '1.0'
+
+services:
+  nail-artist-website:
+    image: 'ghcr.io/techydad05/nail-artist-website:latest'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOST=0.0.0.0
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    
+# Build configuration
+build:
+  dockerfile: Dockerfile
+  context: .
+  
+# Domain configuration (update with your domain)
+domains:
+  - your-domain.com
+  
+# SSL configuration
+ssl:
+  enabled: true
+  force_https: true

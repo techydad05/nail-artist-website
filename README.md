@@ -128,11 +128,64 @@ The contact form uses EmailJS for email delivery. To enable real email sending:
 
 ## Deployment
 
-This site can be deployed to any platform that supports SvelteKit applications:
+This site can be deployed to various platforms:
+
+### Coolify (Self-hosted)
+
+This project is optimized for deployment on [Coolify](https://coolify.io), a self-hosted deployment platform.
+
+#### Prerequisites
+- A server with Coolify installed
+- Docker support on your server
+- Git repository access
+
+#### Deployment Steps
+
+1. **Connect your repository** to Coolify:
+   - Add this GitHub repository to your Coolify instance
+   - Repository: `https://github.com/techydad05/nail-artist-website.git`
+
+2. **Configure the application**:
+   - Set the build command: `npm run build`
+   - Set the start command: `npm start`
+   - Set the port: `3000`
+   - Enable Docker build (uses the included Dockerfile)
+
+3. **Environment variables** (optional):
+   - `NODE_ENV=production`
+   - `PORT=3000`
+   - `HOST=0.0.0.0`
+
+4. **Domain setup**:
+   - Configure your custom domain in Coolify
+   - SSL certificates will be automatically managed
+
+5. **Deploy**:
+   - Coolify will automatically build and deploy your application
+   - Webhook integration enables automatic deployments on git push
+
+#### Local Docker Testing
+
+Test the Docker build locally before deploying:
+
+```bash
+# Build the Docker image
+npm run docker:build
+
+# Run the container
+npm run docker:run
+
+# Visit http://localhost:3000
+```
+
+### Other Platforms
+
+This site can also be deployed to:
 
 - [Vercel](https://vercel.com/)
 - [Netlify](https://netlify.com/)
-- [GitHub Pages](https://pages.github.com/)
+- [Railway](https://railway.app/)
+- Any VPS with Docker support
 
 For Vercel deployment:
 
