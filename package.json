@@ -35,8 +35,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@emailjs/browser": "^3.11.0",
-    "@types/better-sqlite3": "^7.6.13",
-    "better-sqlite3": "^12.2.0"
+    "@emailjs/browser": "^3.11.0"
   }
 }
