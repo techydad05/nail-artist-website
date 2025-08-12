@@ -132,7 +132,7 @@
     <!-- Enhanced Image Slider -->
     <ScrollAnimator animationType="slide-up" delay="400">
         <div class="mb-8 md:mb-12">
-            <EnhancedSlider {sliderImages} autoPlay={true} autoPlayInterval={7000} />
+            <EnhancedSlider images={sliderImages} autoPlay={true} autoPlayInterval={7000} />
         </div>
     </ScrollAnimator>
 
