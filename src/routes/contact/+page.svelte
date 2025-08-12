@@ -125,7 +125,7 @@
 				<button 
 					type="submit" 
 					disabled={isSubmitting}
-					class="btn btn-primary w-full text-lg py-3 disabled:opacity-70 disabled:cursor-not-allowed"
+					class="btn btn-primary w-full text-lg py-3 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center leading-none"
 				>
 					{#if isSubmitting}
 						Sending...

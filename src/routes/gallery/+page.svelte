@@ -62,7 +62,7 @@
 				<div class="p-6">
 					<h3 class="text-xl font-bold mb-2 text-primary">{piece.title}</h3>
 					<p class="text-neutral mb-4">{piece.description}</p>
-					<button class="btn btn-secondary btn-sm">Book This Design</button>
+					<button class="btn btn-secondary btn-sm flex items-center justify-center leading-none py-2">Book This Design</button>
 				</div>
 			</div>
 		{/each}
@@ -73,8 +73,8 @@
 		<h2 class="text-3xl font-bold mb-4 text-primary">Ready to Transform Your Nails?</h2>
 		<p class="text-xl mb-8 max-w-2xl mx-auto text-neutral">Book an appointment today and let's create your perfect nail art!</p>
 		<div class="flex flex-col sm:flex-row justify-center gap-4">
-			<button class="btn btn-primary text-lg px-8 py-3">Book an Appointment</button>
-			<button class="btn btn-outline border-2 border-accent text-accent hover:bg-accent/10 text-lg px-8 py-3">View Services</button>
+			<button class="btn btn-primary text-lg px-8 py-3 flex items-center justify-center leading-none">Book an Appointment</button>
+			<button class="btn btn-outline border-2 border-accent text-accent hover:bg-accent/10 text-lg px-8 py-3 flex items-center justify-center leading-none">View Services</button>
 		</div>
 	</section>
 </div>

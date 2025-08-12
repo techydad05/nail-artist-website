@@ -84,7 +84,7 @@
 						</ul>
 				</div>
 				
-				<button class="btn btn-primary w-full">Book {service.title}</button>
+				<button class="btn btn-primary w-full flex items-center justify-center leading-none py-2">Book {service.title}</button>
 			</div>
 		{/each}
 	</div>
@@ -107,6 +107,6 @@
 	<section class="text-center py-12 rounded-3xl bg-gradient-to-r from-primary/10 to-accent/10 border-2 border-primary/20">
 		<h2 class="text-3xl font-bold mb-4 text-primary">Ready to Pamper Yourself?</h2>
 		<p class="text-xl mb-8 max-w-2xl mx-auto text-neutral">Book an appointment today and experience the perfect blend of professionalism and creativity!</p>
-		<button class="btn btn-primary text-lg px-8 py-3">Book an Appointment</button>
+		<button class="btn btn-primary text-lg px-8 py-3 flex items-center justify-center leading-none">Book an Appointment</button>
 	</section>
 </div>

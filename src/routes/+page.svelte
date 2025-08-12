@@ -1,26 +1,49 @@
 <script>
 	import { onMount } from 'svelte';
+	import EnhancedSlider from '../lib/components/EnhancedSlider.svelte';
+	import ScrollAnimator from '../lib/components/ScrollAnimator.svelte';
+	import VirtualNailDesigner from '../lib/components/VirtualNailDesigner.svelte';
+	import AppointmentModal from '../lib/components/AppointmentModal.svelte';
+	
+	// Modal state
+	let showAppointmentModal = false;
 	
 	let services = [
 		{ 
 			title: "Gel Nails", 
 			description: "Long-lasting, vibrant gel manicures with premium quality polish.",
-			icon: "💅"
+			icon: "💅",
+			color: "from-pink-500 to-rose-500"
 		},
 		{ 
 			title: "Acrylic Extensions", 
 			description: "Beautiful acrylic nails customized to your desired length and style.",
-			icon: "✨"
+			icon: "✨",
+			color: "from-purple-500 to-indigo-500"
 		},
 		{ 
 			title: "Nail Art", 
 			description: "Custom designs, from simple patterns to intricate artwork.",
-			icon: "🎨"
+			icon: "🎨",
+			color: "from-blue-500 to-cyan-500"
 		},
 		{ 
 			title: "Spa Treatment", 
 			description: "Relaxing hand and nail treatments for ultimate pampering.",
-			icon: "🌸"
+			icon: "🌸",
+			color: "from-green-500 to-emerald-500"
+		},
+		{ 
+			title: "Nail Repair", 
+			description: "Expert repair services for damaged or broken nails.",
+			icon: "🔧",
+			color: "from-amber-500 to-orange-500"
+		},
+		{ 
+			title: "Luxury Package", 
+			description: "Complete pampering experience with all our premium services.",
+			icon: "💎",
+			color: "from-yellow-500 to-amber-500"
 		}
 	];
 	
@@ -28,170 +51,197 @@
 		{ 
 			name: "Sarah M.", 
 			text: "Amazing nail art! My nails looked like tiny masterpieces.",
-			stars: 5
+			stars: 5,
+			avatar: "S"
 		},
 		{ 
 			name: "Jessica L.", 
 			text: "Best nail salon in town! Professional and fun atmosphere.",
-			stars: 5
+			stars: 5,
+			avatar: "J"
 		},
 		{ 
 			name: "Emma K.", 
 			text: "My nails lasted for weeks and looked perfect the whole time.",
-			stars: 5
+			stars: 5,
+			avatar: "E"
+		},
+		{ 
+			name: "Mia T.", 
+			text: "The virtual designer helped me choose the perfect style!",
+			stars: 5,
+			avatar: "M"
 		}
 	];
 
-	// Slider functionality
-	let currentSlide = 0;
+	// Enhanced slider images using placeholder images
 	let sliderImages = [
 		{
-			url: 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=800&h=400&fit=crop',
+			url: 'https://picsum.photos/1200/600?random=1',
 			alt: 'Beautiful nail art designs',
-			title: 'Stunning Nail Art'
+			title: 'Stunning Nail Art',
+			description: 'Custom designs that make a statement'
 		},
 		{
-			url: 'https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=800&h=400&fit=crop',
+			url: 'https://picsum.photos/1200/600?random=2',
 			alt: 'Professional manicure service',
-			title: 'Professional Care'
+			title: 'Professional Care',
+			description: 'Expert attention to detail'
 		},
 		{
-			url: 'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&h=400&fit=crop',
+			url: 'https://picsum.photos/1200/600?random=3',
 			alt: 'Colorful gel nails',
-			title: 'Vibrant Colors'
+			title: 'Vibrant Colors',
+			description: 'Endless color possibilities'
+		},
+		{
+			url: 'https://picsum.photos/1200/600?random=4',
+			alt: 'Spa treatment',
+			title: 'Relaxing Spa Experience',
+			description: 'Pamper yourself with our luxury treatments'
 		}
 	];
-
-	function nextSlide() {
-		currentSlide = (currentSlide + 1) % sliderImages.length;
-	}
-
-	function prevSlide() {
-		currentSlide = (currentSlide - 1 + sliderImages.length) % sliderImages.length;
-	}
-
-	function goToSlide(index) {
-		currentSlide = index;
-	}
-
-	// Auto-advance slider
-	onMount(() => {
-		const interval = setInterval(nextSlide, 5000);
-		return () => clearInterval(interval);
-	});
 </script>
 
 <div class="container mx-auto px-4 py-4 md:py-8">
-    <!-- Hero Section with Slider -->
-    <section class="text-center py-8 md:py-12 mb-8 md:mb-12 rounded-2xl md:rounded-3xl bg-gradient-to-r from-primary/10 to-secondary/10 relative overflow-hidden">
-        <div class="relative z-10 px-4">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 glow-text">
-                Polished Perfection
-            </h1>
-            <p class="text-lg sm:text-xl md:text-2xl mb-6 md:mb-8 max-w-2xl mx-auto text-gray-100 leading-relaxed">
-                Professional nail art with a fun, creative twist! Let's make your nails sparkle!
-            </p>
-            <button class="btn btn-primary text-base md:text-lg px-6 md:px-8 py-3">
-                Book an Appointment
-            </button>
-        </div>
-    </section>
-
-    <!-- Image Slider -->
-    <div class="relative overflow-hidden rounded-lg md:rounded-xl mt-6 md:mt-8 mb-8 md:mb-12 shadow-2xl">
-        <div class="relative h-64 sm:h-72 md:h-80 lg:h-96">
-            {#each sliderImages as image, index}
-                <div 
-                    class="absolute inset-0 transition-opacity duration-500 ease-in-out {index === currentSlide ? 'opacity-100' : 'opacity-0'}"
-                    style="background-image: url('{image.url}'); background-size: cover; background-position: center;"
-                >
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center px-4">
-                        <h3 class="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold glow-text text-center">{image.title}</h3>
-                    </div>
-                </div>
-            {/each}
-            
-            <!-- Navigation buttons -->
-            <button 
-                class="absolute top-1/2 left-2 md:left-4 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-secondary hover:bg-secondary/90 text-white rounded-full flex items-center justify-center z-20 opacity-75 hover:opacity-100 transition-all text-sm md:text-base" 
-                on:click={prevSlide}
-            >
-                ❮
-            </button>
-            <button 
-                class="absolute top-1/2 right-2 md:right-4 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-secondary hover:bg-secondary/90 text-white rounded-full flex items-center justify-center z-20 opacity-75 hover:opacity-100 transition-all text-sm md:text-base" 
-                on:click={nextSlide}
-            >
-                ❯
-            </button>
-            
-            <!-- Dots indicator -->
-            <div class="absolute bottom-3 md:bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-                {#each sliderImages as _, index}
+    <!-- Hero Section -->
+    <ScrollAnimator animationType="fade" delay="200">
+        <section class="text-center py-8 md:py-12 mb-8 md:mb-12 rounded-2xl md:rounded-3xl bg-gradient-to-r from-primary/10 to-secondary/10 relative overflow-hidden">
+            <div class="relative z-10 px-4">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 glow-text flex items-center justify-center">
+                    <span class="mr-3">💅</span> Polished Perfection <span class="ml-3">✨</span>
+                </h1>
+                <p class="text-lg sm:text-xl md:text-2xl mb-6 md:mb-8 max-w-2xl mx-auto text-gray-100 leading-relaxed">
+                    Professional nail art with a fun, creative twist! Let's make your nails sparkle!
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <button 
-                        class="w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 {index === currentSlide ? 'bg-primary scale-125' : 'bg-white bg-opacity-50 hover:bg-opacity-75'}"
-                        on:click={() => goToSlide(index)}
+                        class="btn btn-primary text-base md:text-lg px-6 md:px-8 py-2 flex items-center justify-center leading-none"
+                        on:click={() => showAppointmentModal = true}
                     >
+                        Book an Appointment
                     </button>
-                {/each}
+                    <button class="btn btn-secondary text-base md:text-lg px-6 md:px-8 py-2 flex items-center justify-center leading-none">
+                        Try Virtual Designer
+                    </button>
+                </div>
             </div>
+        </section>
+    </ScrollAnimator>
+
+    <!-- Enhanced Image Slider -->
+    <ScrollAnimator animationType="slide-up" delay="400">
+        <div class="mb-8 md:mb-12">
+            <EnhancedSlider {sliderImages} autoPlay={true} autoPlayInterval={7000} />
         </div>
-    </div>
+    </ScrollAnimator>
 
     <!-- Services Section -->
-    <section class="py-12 mb-12">
-        <h2 class="text-center mb-12 text-4xl font-bold text-white glow-text">Our Services</h2>
+    <ScrollAnimator animationType="slide-up" delay="200">
+        <section class="py-12 mb-12">
+            <h2 class="text-center mb-12 text-4xl font-bold text-white glow-text flex items-center justify-center">
+                <span class="mr-3">💅</span> Our Services <span class="ml-3">✨</span>
+            </h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {#each services as service}
-                <div class="bg-neutral text-white hover-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center">
-                    <div class="text-5xl mb-4">{service.icon}</div>
-                    <h3 class="text-2xl font-bold mb-3 text-primary">{service.title}</h3>
-                    <p class="text-gray-300">{service.description}</p>
-                </div>
-            {/each}
-        </div>
-    </section>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {#each services as service, i}
+                    <ScrollAnimator animationType="slide-up" delay="{100 * (i + 1)}" once={true}>
+                        <div class="bg-neutral text-white hover-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center bg-gradient-to-br {service.color} border border-white/10 flex flex-col h-full">
+                            <div class="text-5xl mb-4">{service.icon}</div>
+                            <h3 class="text-2xl font-bold mb-3 text-white">{service.title}</h3>
+                            <p class="text-gray-200 grow">{service.description}</p>
+                            <button class="mt-4 btn btn-sm btn-outline text-white border-white hover:bg-white hover:text-primary mt-auto flex items-center justify-center leading-none py-2">
+                                Learn More
+                            </button>
+                        </div>
+                    </ScrollAnimator>
+                {/each}
+            </div>
+        </section>
+    </ScrollAnimator>
 
     <!-- Testimonials Section -->
-    <section class="py-12 mb-12 bg-gradient-to-r from-accent to-secondary rounded-3xl px-6">
-        <h2 class="text-center mb-12 text-4xl font-bold text-white glow-text">Happy Clients</h2>
+    <ScrollAnimator animationType="fade" delay="300">
+        <section class="py-12 mb-12 bg-gradient-to-r from-accent to-secondary rounded-3xl px-6 relative overflow-hidden">
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjAuNSIgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIwLjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiLz48L3N2Zz4=')] opacity-20"></div>
+            <div class="relative z-10">
+                <h2 class="text-center mb-12 text-4xl font-bold text-white glow-text flex items-center justify-center">
+                    <span class="mr-3">💬</span> Happy Clients <span class="ml-3">🌟</span>
+                </h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {#each testimonials as testimonial}
-                <div class="bg-neutral text-white hover-card rounded-2xl p-6 shadow-lg">
-                    <div class="flex mb-3">
-                        {#each Array(testimonial.stars) as _}
-                            <span class="text-warning text-xl">★</span>
-                        {/each}
-                    </div>
-                    <p class="text-lg italic mb-4 text-gray-300">"{testimonial.text}"</p>
-                    <p class="font-bold text-primary">— {testimonial.name}</p>
-                </div>
-            {/each}
-        </div>
-    </section>
-
-    <!-- Special Offers Section -->
-    <section class="py-12 mb-12 bg-gradient-to-r from-primary to-purple-700 rounded-3xl px-6 text-center">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold text-white glow-text mb-6">Special Offers</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 hover-card">
-                    <div class="text-4xl mb-4">🎉</div>
-                    <h3 class="text-2xl font-bold text-white mb-3">New Client Special</h3>
-                    <p class="text-gray-200 mb-4">Get 20% off your first nail service! Perfect time to try our premium treatments.</p>
-                    <button class="btn btn-accent">Claim Offer</button>
-                </div>
-                <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 hover-card">
-                    <div class="text-4xl mb-4">💅</div>
-                    <h3 class="text-2xl font-bold text-white mb-3">Mani-Pedi Combo</h3>
-                    <p class="text-gray-200 mb-4">Book both services together and save $15! Includes complimentary hand massage.</p>
-                    <button class="btn btn-accent">Book Now</button>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                    {#each testimonials as testimonial, i}
+                        <ScrollAnimator animationType="slide-up" delay="{150 * (i + 1)}" once={true}>
+                            <div class="bg-neutral/80 backdrop-blur-sm text-white hover-card rounded-2xl p-6 shadow-lg border border-white/10 hover:border-primary/50 transition-all duration-300">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center text-white font-bold text-lg mr-3">
+                                        {testimonial.avatar}
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold">{testimonial.name}</h4>
+                                        <div class="flex">
+                                            {#each Array(testimonial.stars) as _}
+                                                <span class="text-warning text-lg">★</span>
+                                            {/each}
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-lg italic text-gray-200">"{testimonial.text}"</p>
+                            </div>
+                        </ScrollAnimator>
+                    {/each}
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </ScrollAnimator>
+
+    <!-- Virtual Nail Designer Section -->
+    <ScrollAnimator animationType="slide-up" delay="200">
+        <section class="py-12 mb-12">
+            <div class="max-w-4xl mx-auto text-center mb-12">
+                <h2 class="text-4xl font-bold text-white glow-text mb-6 flex items-center justify-center">
+                    <span class="mr-3">💅</span> Virtual Nail Designer <span class="ml-3">✨</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+                    Try our interactive nail designer to visualize your perfect nail art before your appointment!
+                </p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <VirtualNailDesigner />
+            </div>
+        </section>
+    </ScrollAnimator>
+
+    <!-- Special Offers Section -->
+    <ScrollAnimator animationType="fade" delay="400">
+        <section class="py-12 mb-12 bg-gradient-to-r from-primary to-purple-700 rounded-3xl px-6 text-center">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold text-white glow-text mb-6 flex items-center justify-center">
+                    <span class="mr-3">🎉</span> Special Offers <span class="ml-3">💎</span>
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 hover-card border border-white/20 hover:border-white/40 transition-all duration-300">
+                        <div class="text-4xl mb-4">🎉</div>
+                        <h3 class="text-2xl font-bold text-white mb-3">New Client Special</h3>
+                        <p class="text-gray-200 mb-4">Get 20% off your first nail service! Perfect time to try our premium treatments.</p>
+                        <button class="btn btn-accent">Claim Offer</button>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 hover-card border border-white/20 hover:border-white/40 transition-all duration-300">
+                        <div class="text-4xl mb-4">💅</div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Mani-Pedi Combo</h3>
+                        <p class="text-gray-200 mb-4">Book both services together and save $15! Includes complimentary hand massage.</p>
+                        <button 
+                            class="btn btn-accent"
+                            on:click={() => showAppointmentModal = true}
+                        >
+                            Book Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </ScrollAnimator>
 
     <!-- Why Choose Us Section -->
     <section class="py-12 mb-12">
@@ -228,6 +278,12 @@
         <div class="inline-block animate-float text-4xl">🎨</div>
     </div>
 </div>
+
+<!-- Appointment Modal -->
+<AppointmentModal 
+    bind:isOpen={showAppointmentModal}
+    on:close={() => showAppointmentModal = false}
+/>
 
 <style>
 	@keyframes float {

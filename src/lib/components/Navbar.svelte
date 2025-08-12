@@ -13,7 +13,8 @@
 		<div class="flex justify-between items-center h-16 md:h-20">
 			<!-- Logo -->
 			<div class="flex items-center">
-				<h1 class="text-lg md:text-2xl font-bold text-primary glow-text">💅 Polished Perfection</h1>
+				<img src="/logo.png" alt="Polished Perfection Logo" class="h-10 md:h-14 w-auto mr-3" />
+				<h1 class="text-lg md:text-2xl font-bold text-primary glow-text hidden md:block">Polished Perfection</h1>
 			</div>
 			
 			<!-- Desktop Navigation -->
