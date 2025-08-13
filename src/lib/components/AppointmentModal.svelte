@@ -7,6 +7,7 @@
 	const dispatch = createEventDispatcher();
 	
 	export let isOpen = false;
+	export let designReference = '';
 	
 	// Form data
 	let customerName = '';
@@ -160,6 +161,11 @@
 	$: if (isOpen) {
 		setTimeout(async () => {
 			await loadServicesAndAppointments();
+			
+			// Pre-fill special requests with design reference if provided
+			if (designReference) {
+				specialRequests = `Virtual Design: ${designReference}\n\n`;
+			}
 		}, 100);
 	}
 	

@@ -7,6 +7,21 @@
 	
 	// Modal state
 	let showAppointmentModal = false;
+	let designReference = '';
+	
+	// Listen for nail designer events
+	onMount(() => {
+		const handleOpenModal = (event) => {
+			designReference = event.detail?.designReference || '';
+			showAppointmentModal = true;
+		};
+		
+		window.addEventListener('open-appointment-modal', handleOpenModal);
+		
+		return () => {
+			window.removeEventListener('open-appointment-modal', handleOpenModal);
+		};
+	});
 	
 	let services = [
 		{ 
@@ -282,7 +297,8 @@
 <!-- Appointment Modal -->
 <AppointmentModal 
     bind:isOpen={showAppointmentModal}
-    on:close={() => showAppointmentModal = false}
+    {designReference}
+    on:close={() => { showAppointmentModal = false; designReference = ''; }}
 />
 
 <style>
