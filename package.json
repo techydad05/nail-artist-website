@@ -14,18 +14,15 @@
     "test": "vitest --run",
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate:sqlite",
-    "db:migrate": "node src/lib/db/migrate.js",
-    "docker:build": "docker build -t nail-artist-website .",
-    "docker:run": "docker run -p 3000:3000 nail-artist-website"
+    "db:migrate": "node src/lib/db/migrate.js"
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
+    "@sveltejs/adapter-node": "^5.2.13",
     "better-sqlite3": "^9.2.2",
     "drizzle-orm": "^0.29.0"
   },
   "devDependencies": {
-    "@sveltejs/adapter-auto": "^3.0.0",
-    "@sveltejs/adapter-node": "^5.2.13",
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "autoprefixer": "^10.4.16",

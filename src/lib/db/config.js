@@ -7,14 +7,12 @@ import fs from 'fs';
 
 // Simple database path logic
 const isDev = process.env.NODE_ENV !== 'production';
-const DB_PATH = isDev ? 'appointments.db' : process.env.DATABASE_PATH || '/app/data/appointments.db';
+const DB_PATH = process.env.DATABASE_PATH || 'appointments.db';
 
-// Ensure database directory exists in production
-if (!isDev) {
-  const dbDir = path.dirname(DB_PATH);
-  if (!fs.existsSync(dbDir)) {
-    fs.mkdirSync(dbDir, { recursive: true });
-  }
+// Ensure database directory exists
+const dbDir = path.dirname(DB_PATH);
+if (!fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
 }
 
 // Create SQLite database connection
