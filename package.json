@@ -1,6 +1,7 @@
 {
   "name": "nail-artist-website",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
@@ -10,8 +11,17 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
     "format": "prettier --plugin-search-dir . --write .",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "db:generate": "drizzle-kit generate:sqlite",
+    "db:migrate": "node src/lib/db/migrate.js",
     "docker:build": "docker build -t nail-artist-website .",
     "docker:run": "docker run -p 3000:3000 nail-artist-website"
+  },
+  "dependencies": {
+    "@emailjs/browser": "^3.11.0",
+    "better-sqlite3": "^9.2.2",
+    "drizzle-orm": "^0.29.0"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.0.0",
@@ -20,6 +30,7 @@
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "autoprefixer": "^10.4.16",
     "daisyui": "^4.0.0",
+    "drizzle-kit": "^0.20.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-svelte": "^2.35.1",
@@ -31,10 +42,7 @@
     "tailwindcss": "^3.3.6",
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
-    "vite": "^5.0.3"
-  },
-  "type": "module",
-  "dependencies": {
-    "@emailjs/browser": "^3.11.0"
+    "vite": "^5.0.3",
+    "vitest": "^1.0.0"
   }
 }

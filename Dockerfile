@@ -1,6 +1,9 @@
 # Build stage
 FROM node:18-alpine AS builder
 
+# Install build dependencies for better-sqlite3
+RUN apk add --no-cache python3 make g++
+
 # Set working directory
 WORKDIR /app
 
@@ -18,6 +21,9 @@ RUN npm run build
 
 # Production stage
 FROM node:18-alpine AS runner
+
+# Install runtime dependencies for better-sqlite3
+RUN apk add --no-cache python3 make g++
 
 # Set working directory
 WORKDIR /app

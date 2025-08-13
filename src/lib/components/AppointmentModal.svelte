@@ -1,5 +1,8 @@
 <script>
 	import { onMount, createEventDispatcher } from 'svelte';
+	import DatePicker from './DatePicker.svelte';
+	import TimeSlotPicker from './TimeSlotPicker.svelte';
+	import BookingForm from './BookingForm.svelte';
 	
 	const dispatch = createEventDispatcher();
 	
@@ -14,24 +17,15 @@
 	let selectedTime = '';
 	let specialRequests = '';
 	let isSubmitting = false;
-	
-	// Calendar state
-	let currentMonth = new Date().getMonth();
-	let currentYear = new Date().getFullYear();
-	let calendarDays = [];
+	let isLoading = false;
 	
 	// Services and appointments data
 	let services = [];
 	let bookedAppointments = [];
 	
-	// Available time slots
-	const timeSlots = [
-		'9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
-		'1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'
-	];
-	
 	// Load services and appointments from API
 	async function loadServicesAndAppointments() {
+		isLoading = true;
 		try {
 			// Load services
 			const servicesResponse = await fetch('/api/services');
@@ -46,99 +40,48 @@
 			if (appointmentsData.success) {
 				bookedAppointments = appointmentsData.appointments.map(apt => ({
 					id: apt.id,
-					date: apt.appointment_date,
-					time: apt.appointment_time,
-					customer: apt.customer_name,
-					service: apt.service_id
+					date: apt.appointmentDate,
+					time: apt.appointmentTime,
+					customer: apt.customerName,
+					service: apt.service
 				}));
 			}
 		} catch (error) {
 			console.error('Error loading data:', error);
+		} finally {
+			isLoading = false;
 		}
 	}
 	
-	const monthNames = [
-		'January', 'February', 'March', 'April', 'May', 'June',
-		'July', 'August', 'September', 'October', 'November', 'December'
-	];
-	
-	const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-	
-	function generateCalendar(month, year) {
-		const firstDay = new Date(year, month, 1);
-		const lastDay = new Date(year, month + 1, 0);
-		const startDate = new Date(firstDay);
-		startDate.setDate(startDate.getDate() - firstDay.getDay());
-		
-		const days = [];
-		const today = new Date();
-		today.setHours(0, 0, 0, 0);
-		
-		for (let i = 0; i < 42; i++) {
-			const date = new Date(startDate);
-			date.setDate(startDate.getDate() + i);
-			
-			const dateString = date.toISOString().split('T')[0];
-			const isCurrentMonth = date.getMonth() === month;
-			const isPast = date < today;
-			const isToday = date.getTime() === today.getTime();
-			
-			// Check if date has any available slots
-			const bookedSlotsForDate = bookedAppointments.filter(apt => apt.date === dateString);
-			const hasAvailableSlots = bookedSlotsForDate.length < timeSlots.length;
-			
-			days.push({
-				date: date.getDate(),
-				fullDate: dateString,
-				isCurrentMonth,
-				isPast,
-				isToday,
-				hasAvailableSlots: hasAvailableSlots && !isPast,
-				bookedSlots: bookedSlotsForDate.length
-			});
-		}
-		
-		return days;
-	}
-	
-	function previousMonth() {
-		if (currentMonth === 0) {
-			currentMonth = 11;
-			currentYear--;
-		} else {
-			currentMonth--;
-		}
-		calendarDays = generateCalendar(currentMonth, currentYear);
-	}
-	
-	function nextMonth() {
-		if (currentMonth === 11) {
-			currentMonth = 0;
-			currentYear++;
-		} else {
-			currentMonth++;
-		}
-		calendarDays = generateCalendar(currentMonth, currentYear);
-	}
-	
-	function selectDate(day) {
-		if (day.isPast || !day.hasAvailableSlots || !day.isCurrentMonth) return;
-		selectedDate = day.fullDate;
+	// Event handlers
+	function handleDateSelected(event) {
+		selectedDate = event.detail.date;
 		selectedTime = ''; // Reset time selection when date changes
 	}
 	
-	function getAvailableTimesForDate(date) {
-		if (!date) return [];
-		
-		const bookedTimes = bookedAppointments
-			.filter(apt => apt.date === date)
-			.map(apt => apt.time);
-		
-		return timeSlots.filter(time => !bookedTimes.includes(time));
+	function handleTimeSelected(event) {
+		selectedTime = event.detail.time;
 	}
 	
-	function selectTime(time) {
-		selectedTime = time;
+	function handleFormUpdate(event) {
+		const { field, value } = event.detail;
+		switch (field) {
+			case 'customerName':
+				customerName = value;
+				break;
+			case 'customerEmail':
+				customerEmail = value;
+				break;
+			case 'customerPhone':
+				customerPhone = value;
+				break;
+			case 'selectedService':
+				selectedService = value;
+				break;
+			case 'specialRequests':
+				specialRequests = value;
+				break;
+		}
 	}
 	
 	function closeModal() {
@@ -158,9 +101,11 @@
 		isSubmitting = false;
 	}
 	
-	async function submitAppointment() {
-		if (!customerName || !customerEmail || !selectedService || !selectedDate || !selectedTime) {
-			alert('Please fill in all required fields');
+	async function handleFormSubmit(event) {
+		const formData = event.detail;
+		
+		if (!selectedDate || !selectedTime) {
+			alert('Please select both a date and time for your appointment');
 			return;
 		}
 		
@@ -174,13 +119,13 @@
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					customerName,
-					customerEmail,
-					customerPhone,
-					serviceId: selectedService,
-					date: selectedDate,
-					time: selectedTime,
-					specialRequests
+					customerName: formData.customerName,
+					customerEmail: formData.customerEmail,
+					customerPhone: formData.customerPhone,
+					service: formData.selectedService,
+					appointmentDate: selectedDate,
+					appointmentTime: selectedTime,
+					notes: formData.specialRequests
 				})
 			});
 			
@@ -190,16 +135,14 @@
 				// Reload appointments to get updated data
 				await loadServicesAndAppointments();
 				
-				// Update calendar with new data
-				calendarDays = generateCalendar(currentMonth, currentYear);
-				
 				// Show success message
-				const selectedServiceName = services.find(s => s.id === selectedService)?.name;
-				alert(`🎉 Appointment booked successfully!\n\n📅 Date: ${selectedDate}\n⏰ Time: ${selectedTime}\n💅 Service: ${selectedServiceName}\n\nWe'll send you a confirmation email at ${customerEmail} shortly!`);
+				const selectedServiceName = services.find(s => s.id === formData.selectedService)?.name;
+				alert(`🎉 Appointment booked successfully!\n\n📅 Date: ${selectedDate}\n⏰ Time: ${selectedTime}\n💅 Service: ${selectedServiceName}\n\nWe'll send you a confirmation email at ${formData.customerEmail} shortly!`);
 				
 				closeModal();
 			} else {
-				alert(`❌ Error booking appointment: ${result.error}`);
+				const errorMessage = result.error?.message || result.error || 'Unknown error occurred';
+				alert(`❌ Error booking appointment: ${errorMessage}`);
 			}
 		} catch (error) {
 			console.error('Error submitting appointment:', error);
@@ -211,14 +154,12 @@
 	
 	onMount(() => {
 		loadServicesAndAppointments();
-		calendarDays = generateCalendar(currentMonth, currentYear);
 	});
 	
-	// Reinitialize calendar when modal opens
+	// Reinitialize data when modal opens
 	$: if (isOpen) {
 		setTimeout(async () => {
 			await loadServicesAndAppointments();
-			calendarDays = generateCalendar(currentMonth, currentYear);
 		}, 100);
 	}
 	
@@ -268,232 +209,52 @@
 			
 			<!-- Modal Content -->
 			<div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
-				<!-- Left Column: Calendar -->
+				<!-- Left Column: Date and Time Selection -->
 				<div class="space-y-6">
-					<div>
-						<h3 class="text-xl font-semibold mb-4 text-base-content">Select a Date</h3>
-						<div class="calendar-container bg-base-200 border border-base-300 rounded-lg overflow-hidden">
-							<!-- Calendar Header -->
-							<div class="bg-gradient-to-r from-primary to-secondary text-white p-4 flex justify-between items-center">
-								<button 
-									class="btn btn-ghost btn-sm text-white hover:bg-white/20"
-									on:click={previousMonth}
-								>
-									‹
-								</button>
-								<h4 class="text-lg font-semibold">
-									{monthNames[currentMonth]} {currentYear}
-								</h4>
-								<button 
-									class="btn btn-ghost btn-sm text-white hover:bg-white/20"
-									on:click={nextMonth}
-								>
-									›
-								</button>
-							</div>
-							
-							<!-- Calendar Grid -->
-							<div class="p-4">
-								<!-- Day Headers -->
-								<div class="grid grid-cols-7 gap-1 mb-2">
-									{#each dayNames as dayName}
-										<div class="text-center text-sm font-medium text-base-content/70 p-2">
-											{dayName}
-										</div>
-									{/each}
-								</div>
-								
-								<!-- Calendar Days -->
-								<div class="grid grid-cols-7 gap-1">
-									{#each calendarDays as day}
-										<button
-											class="aspect-square p-2 text-sm rounded-lg transition-all duration-200 relative text-base-content"
-											class:opacity-40={!day.isCurrentMonth}
-											class:bg-primary={day.isToday && day.isCurrentMonth}
-											class:bg-success={day.hasAvailableSlots && day.isCurrentMonth && !day.isToday}
-											class:bg-warning={day.bookedSlots > 0 && day.hasAvailableSlots && day.isCurrentMonth && !day.isToday}
-											class:bg-error={!day.hasAvailableSlots && day.isCurrentMonth && !day.isPast}
-											class:bg-base-300={day.isPast}
-											class:ring-2={selectedDate === day.fullDate}
-											class:ring-primary={selectedDate === day.fullDate}
-											class:cursor-not-allowed={day.isPast || !day.hasAvailableSlots || !day.isCurrentMonth}
-											class:hover:bg-primary-focus={day.hasAvailableSlots && day.isCurrentMonth && !day.isPast}
-											disabled={day.isPast || !day.hasAvailableSlots || !day.isCurrentMonth}
-											on:click={() => selectDate(day)}
-										>
-											{day.date}
-											{#if day.bookedSlots > 0 && day.isCurrentMonth}
-												<div class="absolute bottom-0 right-0 w-2 h-2 bg-error rounded-full"></div>
-											{/if}
-										</button>
-									{/each}
-								</div>
-							</div>
-						</div>
-						
-						<!-- Legend -->
-						<div class="mt-4 flex flex-wrap gap-4 text-sm text-base-content">
-							<div class="flex items-center">
-								<div class="w-4 h-4 bg-success rounded mr-2"></div>
-								<span>Available</span>
-							</div>
-							<div class="flex items-center">
-								<div class="w-4 h-4 bg-warning rounded mr-2"></div>
-								<span>Partially Booked</span>
-							</div>
-							<div class="flex items-center">
-								<div class="w-4 h-4 bg-error rounded mr-2"></div>
-								<span>Fully Booked</span>
-							</div>
-						</div>
-					</div>
+					<DatePicker 
+						bind:selectedDate
+						{bookedAppointments}
+						{isLoading}
+						on:dateSelected={handleDateSelected}
+					/>
 					
-					<!-- Time Selection -->
-					{#if selectedDate}
-						<div>
-							<h3 class="text-xl font-semibold mb-4 text-base-content">
-								Available Times for {new Date(selectedDate + 'T00:00:00').toLocaleDateString()}
-							</h3>
-							<div class="grid grid-cols-3 gap-2">
-								{#each getAvailableTimesForDate(selectedDate) as time}
-									<button
-										class="btn btn-outline btn-sm"
-										class:btn-primary={selectedTime === time}
-										on:click={() => selectTime(time)}
-									>
-										{time}
-									</button>
-								{:else}
-									<p class="col-span-3 text-base-content/60 text-center py-4">
-										No available times for this date
-									</p>
-								{/each}
-							</div>
-						</div>
-					{/if}
+					<TimeSlotPicker 
+						{selectedDate}
+						bind:selectedTime
+						{bookedAppointments}
+						{isLoading}
+						on:timeSelected={handleTimeSelected}
+					/>
 				</div>
 				
 				<!-- Right Column: Booking Form -->
 				<div class="space-y-6">
-					<h3 class="text-xl font-semibold text-base-content">Your Information</h3>
+					<BookingForm 
+						bind:customerName
+						bind:customerEmail
+						bind:customerPhone
+						bind:selectedService
+						bind:specialRequests
+						{services}
+						{isSubmitting}
+						on:update={handleFormUpdate}
+						on:submit={handleFormSubmit}
+						on:cancel={closeModal}
+					/>
 					
-					<form on:submit|preventDefault={submitAppointment} class="space-y-4">
-						<!-- Customer Name -->
-						<div>
-							<label for="customer-name" class="block text-sm font-medium text-base-content mb-1">
-								Full Name *
-							</label>
-							<input
-								id="customer-name"
-								type="text"
-								bind:value={customerName}
-								class="input input-bordered w-full bg-base-200 text-base-content"
-								placeholder="Enter your full name"
-								required
-							>
-						</div>
-						
-						<!-- Customer Email -->
-						<div>
-							<label for="customer-email" class="block text-sm font-medium text-base-content mb-1">
-								Email Address *
-							</label>
-							<input
-								id="customer-email"
-								type="email"
-								bind:value={customerEmail}
-								class="input input-bordered w-full bg-base-200 text-base-content"
-								placeholder="your.email@example.com"
-								required
-							>
-						</div>
-						
-						<!-- Customer Phone -->
-						<div>
-							<label for="customer-phone" class="block text-sm font-medium text-base-content mb-1">
-								Phone Number
-							</label>
-							<input
-								id="customer-phone"
-								type="tel"
-								bind:value={customerPhone}
-								class="input input-bordered w-full bg-base-200 text-base-content"
-								placeholder="(555) 123-4567"
-							>
-						</div>
-						
-						<!-- Service Selection -->
-						<div>
-							<label for="service-select" class="block text-sm font-medium text-base-content mb-1">
-								Select Service *
-							</label>
-							<select
-								id="service-select"
-								bind:value={selectedService}
-								class="select select-bordered w-full bg-base-200 text-base-content"
-								required
-							>
-								<option value="">Choose a service...</option>
-								{#each services as service}
-									<option value={service.id}>
-										{service.name} - {service.duration} ({service.price})
-									</option>
-								{/each}
-							</select>
-						</div>
-						
-						<!-- Special Requests -->
-						<div>
-							<label for="special-requests" class="block text-sm font-medium text-base-content mb-1">
-								Special Requests
-							</label>
-							<textarea
-								id="special-requests"
-								bind:value={specialRequests}
-								rows="3"
-								class="textarea textarea-bordered w-full bg-base-200 text-base-content resize-none"
-								placeholder="Any special requests or preferences..."
-							></textarea>
-						</div>
-						
-						<!-- Booking Summary -->
-						{#if selectedDate && selectedTime && selectedService}
-							<div class="bg-gray-50 p-4 rounded-lg">
-								<h4 class="font-semibold text-gray-800 mb-2">Booking Summary</h4>
-								<div class="space-y-1 text-sm text-gray-600">
-									<p><strong>Date:</strong> {new Date(selectedDate + 'T00:00:00').toLocaleDateString()}</p>
-									<p><strong>Time:</strong> {selectedTime}</p>
-									<p><strong>Service:</strong> {services.find(s => s.id === selectedService)?.name}</p>
-									<p><strong>Duration:</strong> {services.find(s => s.id === selectedService)?.duration}</p>
-									<p><strong>Price:</strong> {services.find(s => s.id === selectedService)?.price}</p>
-								</div>
+					<!-- Booking Summary -->
+					{#if selectedDate && selectedTime && selectedService}
+						<div class="bg-base-200 p-4 rounded-lg border border-base-300">
+							<h4 class="font-semibold text-base-content mb-2">Booking Summary</h4>
+							<div class="space-y-1 text-sm text-base-content/80">
+								<p><strong>Date:</strong> {new Date(selectedDate + 'T00:00:00').toLocaleDateString()}</p>
+								<p><strong>Time:</strong> {selectedTime}</p>
+								<p><strong>Service:</strong> {services.find(s => s.id === selectedService)?.name}</p>
+								<p><strong>Duration:</strong> {services.find(s => s.id === selectedService)?.duration}min</p>
+								<p><strong>Price:</strong> {services.find(s => s.id === selectedService)?.price}</p>
 							</div>
-						{/if}
-						
-						<!-- Submit Button -->
-						<div class="flex gap-3 pt-4">
-							<button
-								type="button"
-								class="btn btn-ghost flex-1"
-								on:click={closeModal}
-								disabled={isSubmitting}
-							>
-								Cancel
-							</button>
-							<button
-								type="submit"
-								class="btn btn-primary flex-1"
-								disabled={!selectedDate || !selectedTime || !selectedService || !customerName || !customerEmail || isSubmitting}
-							>
-								{#if isSubmitting}
-									<span class="loading loading-spinner loading-sm"></span>
-									Booking...
-								{:else}
-									Book Appointment
-								{/if}
-							</button>
 						</div>
-					</form>
+					{/if}
 				</div>
 			</div>
 		</div>
