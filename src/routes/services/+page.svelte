@@ -54,9 +54,11 @@
 	];
 </script>
 
-<div class="container mx-auto px-4 py-8">
-	<h1 class="text-center text-4xl font-bold mb-4 text-primary">Our Services</h1>
-	<p class="text-center text-xl mb-12 text-neutral">Professional nail care with a creative twist</p>
+<div class="container mx-auto px-4 py-12">
+	<div class="text-center mb-16">
+		<h1 class="text-5xl font-bold mb-6">Our Services</h1>
+		<p class="text-xl text-surface-600-300-token max-w-2xl mx-auto">Professional nail care with a creative twist. Each service is designed to give you beautiful, long-lasting results.</p>
+	</div>
 	
 	<!-- Services Grid -->
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">

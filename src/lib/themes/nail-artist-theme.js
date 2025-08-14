@@ -4,19 +4,19 @@ export const nailArtistTheme = {
 		// =~= Theme Properties =~=
 		"--theme-font-family-base": `Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'`,
 		"--theme-font-family-heading": `Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'`,
-		"--theme-font-color-base": "0 0 0",
-		"--theme-font-color-dark": "255 255 255",
-		"--theme-rounded-base": "9999px",
+		"--theme-font-color-base": "15 23 42",
+		"--theme-font-color-dark": "248 250 252",
+		"--theme-rounded-base": "6px",
 		"--theme-rounded-container": "8px",
 		"--theme-border-base": "1px",
 		// =~= Theme On-X Colors =~=
 		"--on-primary": "255 255 255",
 		"--on-secondary": "255 255 255",
-		"--on-tertiary": "0 0 0",
-		"--on-success": "0 0 0",
+		"--on-tertiary": "255 255 255",
+		"--on-success": "255 255 255",
 		"--on-warning": "0 0 0",
 		"--on-error": "255 255 255",
-		"--on-surface": "255 255 255",
+		"--on-surface": "15 23 42",
 		// =~= Theme Colors  =~=
 		// primary | #8b5cf6 (vibrant purple)
 		"--color-primary-50": "238 231 254", // #eee7fe
@@ -84,16 +84,16 @@ export const nailArtistTheme = {
 		"--color-error-700": "179 51 51", // #b33333
 		"--color-error-800": "143 41 41", // #8f2929
 		"--color-error-900": "117 33 33", // #752121
-		// surface | #1f2937 (dark gray)
-		"--color-surface-50": "221 223 225", // #dddfe1
-		"--color-surface-100": "210 212 215", // #d2d4d7
-		"--color-surface-200": "199 202 205", // #c7cacd
-		"--color-surface-300": "165 170 175", // #a5aaaf
-		"--color-surface-400": "97 106 116", // #616a74
-		"--color-surface-500": "31 41 55", // #1f2937
-		"--color-surface-600": "28 37 50", // #1c2532
-		"--color-surface-700": "23 31 41", // #171f29
-		"--color-surface-800": "19 25 33", // #131921
-		"--color-surface-900": "15 20 27", // #0f141b
+		// surface | Modern neutral palette
+		"--color-surface-50": "248 250 252", // #f8fafc - very light
+		"--color-surface-100": "241 245 249", // #f1f5f9 - light
+		"--color-surface-200": "226 232 240", // #e2e8f0 - light gray
+		"--color-surface-300": "203 213 225", // #cbd5e1 - medium light
+		"--color-surface-400": "148 163 184", // #94a3b8 - medium
+		"--color-surface-500": "100 116 139", // #64748b - medium dark
+		"--color-surface-600": "71 85 105", // #475569 - dark
+		"--color-surface-700": "51 65 85", // #334155 - darker
+		"--color-surface-800": "30 41 59", // #1e293b - very dark
+		"--color-surface-900": "15 23 42", // #0f172a - darkest
 	}
 }

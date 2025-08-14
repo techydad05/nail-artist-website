@@ -25,9 +25,11 @@
 		: nailArtPieces.filter(piece => piece.category === activeCategory);
 </script>
 
-<div class="container mx-auto px-4 py-8">
-	<h1 class="text-center text-4xl font-bold mb-4 text-primary">Nail Art Gallery</h1>
-	<p class="text-center text-xl mb-12 text-neutral">Inspiring designs for your next appointment</p>
+<div class="container mx-auto px-4 py-12">
+	<div class="text-center mb-16">
+		<h1 class="text-5xl font-bold mb-6">Nail Art Gallery</h1>
+		<p class="text-xl text-surface-600-300-token max-w-2xl mx-auto">Discover inspiring designs and find the perfect style for your next appointment.</p>
+	</div>
 	
 	<!-- Category Filters -->
 	<div class="flex flex-wrap justify-center gap-4 mb-12">

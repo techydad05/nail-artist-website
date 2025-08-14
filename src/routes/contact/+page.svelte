@@ -70,8 +70,11 @@
 	];
 </script>
 
-<div class="container mx-auto px-4 py-8">
-	<h1 class="text-center text-4xl font-bold mb-12 text-primary">Get in Touch</h1>
+<div class="container mx-auto px-4 py-12">
+	<div class="text-center mb-16">
+		<h1 class="text-5xl font-bold mb-6">Get in Touch</h1>
+		<p class="text-xl text-surface-600-300-token max-w-2xl mx-auto">Ready to book your appointment or have questions? We'd love to hear from you.</p>
+	</div>
 	
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 		<!-- Contact Form -->
