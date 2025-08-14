@@ -18,28 +18,28 @@ export const nailArtistTheme = {
 		"--on-error": "255 255 255",
 		"--on-surface": "15 23 42",
 		// =~= Theme Colors  =~=
-		// primary | #8b5cf6 (vibrant purple)
-		"--color-primary-50": "238 231 254", // #eee7fe
-		"--color-primary-100": "232 222 253", // #e8defd
-		"--color-primary-200": "227 214 253", // #e3d6fd
-		"--color-primary-300": "210 190 251", // #d2befb
-		"--color-primary-400": "176 141 248", // #b08df8
-		"--color-primary-500": "139 92 246", // #8b5cf6
-		"--color-primary-600": "125 83 221", // #7d53dd
-		"--color-primary-700": "104 69 185", // #6845b9
-		"--color-primary-800": "83 55 148", // #533794
-		"--color-primary-900": "68 45 121", // #442d79
-		// secondary | #ec4899 (hot pink)
-		"--color-secondary-50": "252 228 240", // #fce4f0
-		"--color-secondary-100": "251 218 235", // #fbdaeb
-		"--color-secondary-200": "250 209 230", // #fad1e6
-		"--color-secondary-300": "247 182 215", // #f7b6d7
-		"--color-secondary-400": "240 127 184", // #f07fb8
-		"--color-secondary-500": "236 72 153", // #ec4899
-		"--color-secondary-600": "212 65 138", // #d4418a
-		"--color-secondary-700": "177 54 115", // #b13673
-		"--color-secondary-800": "142 43 92", // #8e2b5c
-		"--color-secondary-900": "116 35 75", // #74234b
+		// primary | #ec4899 (beautiful pink)
+		"--color-primary-50": "252 228 240", // #fce4f0
+		"--color-primary-100": "251 218 235", // #fbdaeb
+		"--color-primary-200": "250 209 230", // #fad1e6
+		"--color-primary-300": "247 182 215", // #f7b6d7
+		"--color-primary-400": "240 127 184", // #f07fb8
+		"--color-primary-500": "236 72 153", // #ec4899
+		"--color-primary-600": "212 65 138", // #d4418a
+		"--color-primary-700": "177 54 115", // #b13673
+		"--color-primary-800": "142 43 92", // #8e2b5c
+		"--color-primary-900": "116 35 75", // #74234b
+		// secondary | #8b5cf6 (complementary purple)
+		"--color-secondary-50": "238 231 254", // #eee7fe
+		"--color-secondary-100": "232 222 253", // #e8defd
+		"--color-secondary-200": "227 214 253", // #e3d6fd
+		"--color-secondary-300": "210 190 251", // #d2befb
+		"--color-secondary-400": "176 141 248", // #b08df8
+		"--color-secondary-500": "139 92 246", // #8b5cf6
+		"--color-secondary-600": "125 83 221", // #7d53dd
+		"--color-secondary-700": "104 69 185", // #6845b9
+		"--color-secondary-800": "83 55 148", // #533794
+		"--color-secondary-900": "68 45 121", // #442d79
 		// tertiary | #06b6d4 (cyan)
 		"--color-tertiary-50": "218 244 249", // #daf4f9
 		"--color-tertiary-100": "205 240 246", // #cdf0f6

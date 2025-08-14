@@ -18,7 +18,7 @@
 	// Fun message themes
 	const themes = [
 		{ id: 'nail-art', name: 'Nail Art', emoji: '💅', color: 'from-pink-500 to-purple-500' },
-		{ id: 'spa-day', name: 'Spa Day', emoji: '🌸', color: 'from-green-400 to-blue-500' },
+		{ id: 'spa-day', name: 'Spa Day', emoji: '🌸', color: 'from-pink-400 to-purple-500' },
 		{ id: 'glitter', name: 'Glitter', emoji: '✨', color: 'from-yellow-400 to-red-500' },
 		{ id: 'cute', name: 'Cute', emoji: '💖', color: 'from-pink-400 to-rose-500' }
 	];

@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom Nail Artist Theme - Pink Primary */
+:root[data-theme="nail-artist"] {
+  /* Primary Pink Colors */
+  --color-primary-50: 252 228 240;
+  --color-primary-100: 251 218 235;
+  --color-primary-200: 250 209 230;
+  --color-primary-300: 247 182 215;
+  --color-primary-400: 240 127 184;
+  --color-primary-500: 236 72 153;
+  --color-primary-600: 212 65 138;
+  --color-primary-700: 177 54 115;
+  --color-primary-800: 142 43 92;
+  --color-primary-900: 116 35 75;
+  
+  /* Secondary Purple Colors */
+  --color-secondary-50: 238 231 254;
+  --color-secondary-100: 232 222 253;
+  --color-secondary-200: 227 214 253;
+  --color-secondary-300: 210 190 251;
+  --color-secondary-400: 176 141 248;
+  --color-secondary-500: 139 92 246;
+  --color-secondary-600: 125 83 221;
+  --color-secondary-700: 104 69 185;
+  --color-secondary-800: 83 55 148;
+  --color-secondary-900: 68 45 121;
+}
+
 @layer base {
   /* Enhanced typography using Skeleton tokens */
   h1 {
