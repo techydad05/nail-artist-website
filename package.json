@@ -14,7 +14,8 @@
     "test": "vitest --run",
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate:sqlite",
-    "db:migrate": "node src/lib/db/migrate.js"
+    "db:migrate": "node src/lib/db/migrate.js",
+    "db:seed": "node scripts/seed-database.js"
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",

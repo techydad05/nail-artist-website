@@ -23,6 +23,7 @@
 	// Services and appointments data
 	let services = [];
 	let bookedAppointments = [];
+	let availabilityData = new Map(); // Store all availability data
 	
 	// Load services and appointments from API
 	async function loadServicesAndAppointments() {
@@ -47,11 +48,71 @@
 					service: apt.service
 				}));
 			}
+			
+			// Pre-load availability for the next 60 days
+			await loadAvailabilityData();
 		} catch (error) {
 			console.error('Error loading data:', error);
 		} finally {
 			isLoading = false;
 		}
+	}
+	
+	// Load availability data for multiple dates at once
+	async function loadAvailabilityData() {
+		const today = new Date();
+		const endDate = new Date();
+		endDate.setDate(today.getDate() + 60); // Next 60 days
+		
+		// Generate date range
+		const dates = [];
+		for (let d = new Date(today); d <= endDate; d.setDate(d.getDate() + 1)) {
+			// Skip weekends (assuming business is closed)
+			if (d.getDay() !== 0 && d.getDay() !== 6) {
+				dates.push(d.toISOString().split('T')[0]);
+			}
+		}
+		
+		// Load availability for all dates in batches to avoid overwhelming the server
+		const batchSize = 10;
+		for (let i = 0; i < dates.length; i += batchSize) {
+			const batch = dates.slice(i, i + batchSize);
+			await Promise.all(batch.map(async (date) => {
+				try {
+					const response = await fetch(`/api/appointments/availability?date=${date}`);
+					const data = await response.json();
+					if (data.success) {
+						availabilityData.set(date, data.availableSlots || getLocalAvailableSlots(date));
+					} else {
+						// Fallback to local calculation
+						availabilityData.set(date, getLocalAvailableSlots(date));
+					}
+				} catch (error) {
+					// Fallback to local calculation
+					availabilityData.set(date, getLocalAvailableSlots(date));
+				}
+			}));
+			
+			// Small delay between batches to be nice to the server
+			if (i + batchSize < dates.length) {
+				await new Promise(resolve => setTimeout(resolve, 100));
+			}
+		}
+	}
+	
+	// Local availability calculation as fallback
+	function getLocalAvailableSlots(date) {
+		const allTimeSlots = [
+			'9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+			'12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM',
+			'3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM'
+		];
+		
+		const bookedTimes = bookedAppointments
+			.filter(apt => apt.date === date)
+			.map(apt => apt.time);
+		
+		return allTimeSlots.filter(time => !bookedTimes.includes(time));
 	}
 	
 	// Event handlers
@@ -113,6 +174,21 @@
 		isSubmitting = true;
 		
 		try {
+			// Final availability check before submission
+			const availabilityCheck = await fetch(`/api/appointments/availability?date=${selectedDate}`);
+			const availabilityData = await availabilityCheck.json();
+			
+			if (availabilityData.success) {
+				const currentlyAvailable = availabilityData.availableSlots || [];
+				if (!currentlyAvailable.includes(selectedTime)) {
+					alert('❌ Sorry, this time slot is no longer available. Please select a different time.');
+					// Refresh the availability data
+					await loadServicesAndAppointments();
+					isSubmitting = false;
+					return;
+				}
+			}
+			
 			// Submit appointment to API
 			const response = await fetch('/api/appointments', {
 				method: 'POST',
@@ -143,7 +219,13 @@
 				closeModal();
 			} else {
 				const errorMessage = result.error?.message || result.error || 'Unknown error occurred';
-				alert(`❌ Error booking appointment: ${errorMessage}`);
+				if (errorMessage.includes('not available') || errorMessage.includes('conflict')) {
+					alert(`❌ Time slot conflict: ${errorMessage}\n\nPlease select a different time.`);
+					// Refresh the availability data
+					await loadServicesAndAppointments();
+				} else {
+					alert(`❌ Error booking appointment: ${errorMessage}`);
+				}
 			}
 		} catch (error) {
 			console.error('Error submitting appointment:', error);
@@ -255,6 +337,7 @@
 						bind:selectedTime
 						{bookedAppointments}
 						{isLoading}
+						{availabilityData}
 						on:timeSelected={handleTimeSelected}
 					/>
 				</div>
