@@ -107,7 +107,12 @@
 				</section>
 				
 				<footer class="card-footer">
-					<button class="btn variant-filled-primary w-full">Book {service.title}</button>
+					<button 
+						class="btn variant-filled-primary w-full"
+						on:click={() => window.dispatchEvent(new CustomEvent('open-appointment-modal'))}
+					>
+						Book {service.title}
+					</button>
 				</footer>
 			</div>
 		{/each}
@@ -133,6 +138,11 @@
 	<section class="text-center py-12 rounded-3xl bg-gradient-to-r from-primary/10 to-accent/10 border-2 border-primary/20">
 		<h2 class="text-3xl font-bold mb-4 text-primary">Ready to Pamper Yourself?</h2>
 		<p class="text-xl mb-8 max-w-2xl mx-auto text-neutral">Book an appointment today and experience the perfect blend of professionalism and creativity!</p>
-		<button class="btn variant-filled-primary">Book an Appointment</button>
+		<button 
+			class="btn variant-filled-primary"
+			on:click={() => window.dispatchEvent(new CustomEvent('open-appointment-modal'))}
+		>
+			Book an Appointment
+		</button>
 	</section>
 </div>

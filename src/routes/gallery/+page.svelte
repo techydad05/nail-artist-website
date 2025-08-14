@@ -71,7 +71,12 @@
 					<p class="mb-4">{piece.description}</p>
 				</section>
 				<footer class="card-footer">
-					<button class="btn variant-filled-secondary btn-sm">Book This Design</button>
+					<button 
+						class="btn variant-filled-secondary btn-sm"
+						on:click={() => window.dispatchEvent(new CustomEvent('open-appointment-modal'))}
+					>
+						Book This Design
+					</button>
 				</footer>
 			</div>
 		{/each}
@@ -82,7 +87,12 @@
 		<h2 class="text-3xl font-bold mb-4 text-primary">Ready to Transform Your Nails?</h2>
 		<p class="text-xl mb-8 max-w-2xl mx-auto text-neutral">Book an appointment today and let's create your perfect nail art!</p>
 		<div class="flex flex-col sm:flex-row justify-center gap-4">
-			<button class="btn variant-filled-primary">Book an Appointment</button>
+			<button 
+				class="btn variant-filled-primary"
+				on:click={() => window.dispatchEvent(new CustomEvent('open-appointment-modal'))}
+			>
+				Book an Appointment
+			</button>
 			<button class="btn variant-outline-tertiary">View Services</button>
 		</div>
 	</section>
