@@ -165,21 +165,6 @@ function generateSampleAppointments() {
 			
 			const customer = customers[Math.floor(Math.random() * customers.length)];
 			const service = services[Math.floor(Math.random() * services.length)];
-			const note = Math.random() > 0.5 ? notes[Math.floor(Math.random() * notes.length)] : null;
-			
-			// Vary the status - most are confirmed, some pending, few completed
-			let status = 'confirmed';
-			const statusRand = Math.random();
-			if (dayOffset < 0) {
-				status = 'completed';
-			} else if (statusRand < 0.1) {
-				status = 'pending';
-			} else if (statusRand < 0.05) {
-				status = 'cancelled';
-			}
-			
-			const customer = customers[Math.floor(Math.random() * customers.length)];
-			const service = services[Math.floor(Math.random() * services.length)];
 			const note = Math.random() > 0.4 ? notes[Math.floor(Math.random() * notes.length)] : null;
 			
 			// Vary the status - most are confirmed, some pending, few completed

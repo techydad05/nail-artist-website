@@ -1,6 +1,12 @@
+import { skeleton } from '@skeletonlabs/tw-plugin';
+import { nailArtistTheme } from './src/lib/themes/nail-artist-theme.js';
+
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{html,js,svelte,ts}'],
+  content: [
+    './src/**/*.{html,js,svelte,ts}',
+    require('path').join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
+  ],
   theme: {
     extend: {
       keyframes: {
@@ -29,24 +35,19 @@ export default {
       }
     },
   },
-  plugins: [require('daisyui')],
-  daisyui: {
-    themes: [
-      {
-        nailArtist: {
-          "primary": "#8b5cf6", // vibrant purple
-          "secondary": "#ec4899", // hot pink
-          "accent": "#06b6d4", // cyan
-          "neutral": "#1f2937", // dark gray
-          "base-100": "#111827", // very dark gray
-          "base-200": "#1f2937", // dark gray
-          "base-300": "#374151", // medium gray
-          "info": "#06b6d4",
-          "success": "#10b981",
-          "warning": "#f59e0b",
-          "error": "#ef4444",
-        }
+  plugins: [
+    skeleton({
+      themes: {
+        preset: [
+          {
+            name: 'skeleton',
+            enhancements: true,
+          }
+        ],
+        custom: [
+          nailArtistTheme
+        ]
       }
-    ]
-  }
+    })
+  ]
 }

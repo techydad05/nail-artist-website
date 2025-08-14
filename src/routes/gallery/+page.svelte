@@ -33,7 +33,7 @@
 	<div class="flex flex-wrap justify-center gap-4 mb-12">
 		{#each categories as category}
 			<button 
-				class="btn px-6 py-3 rounded-full transition-all duration-300 {activeCategory === category.id ? 'btn-primary' : 'btn-outline border-2 border-primary text-primary hover:bg-primary/10'}"
+				class="btn {activeCategory === category.id ? 'variant-filled-primary' : 'variant-outline-primary'}"
 				on:click={() => activeCategory = category.id}
 			>
 				{category.name}
@@ -44,26 +44,33 @@
 	<!-- Gallery Grid -->
 	<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-12">
 		{#each filteredPieces as piece}
-			<div class="bg-white rounded-2xl overflow-hidden shadow-lg border-2 border-primary/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+			<div class="card card-hover overflow-hidden animate-fade-in hover-card">
 				<!-- Placeholder for nail art image -->
-				<div class="bg-gradient-to-br from-primary/20 to-accent/20 h-64 flex items-center justify-center text-6xl">
-					{#if piece.category === 'glitter'}
-						✨
-					{:else if piece.category === 'floral'}
-						🌸
-					{:else if piece.category === 'abstract'}
-						🎨
-					{:else if piece.category === 'holiday'}
-						🎉
-					{:else}
-						💅
-					{/if}
-				</div>
-				<div class="p-6">
-					<h3 class="text-xl font-bold mb-2 text-primary">{piece.title}</h3>
-					<p class="text-neutral mb-4">{piece.description}</p>
-					<button class="btn btn-secondary btn-sm flex items-center justify-center leading-none py-2">Book This Design</button>
-				</div>
+				<header class="card-header">
+					<div class="bg-gradient-to-br from-primary-500/20 to-tertiary-500/20 h-64 flex items-center justify-center text-6xl">
+						{#if piece.category === 'glitter'}
+							✨
+						{:else if piece.category === 'floral'}
+							🌸
+						{:else if piece.category === 'abstract'}
+							🎨
+						{:else if piece.category === 'holiday'}
+							🎉
+						{:else}
+							💅
+						{/if}
+					</div>
+				</header>
+				<section class="p-4">
+					<div class="flex justify-between items-start mb-2">
+						<h3 class="h3">{piece.title}</h3>
+						<span class="badge variant-soft-primary capitalize">{piece.category}</span>
+					</div>
+					<p class="mb-4">{piece.description}</p>
+				</section>
+				<footer class="card-footer">
+					<button class="btn variant-filled-secondary btn-sm">Book This Design</button>
+				</footer>
 			</div>
 		{/each}
 	</div>
@@ -73,8 +80,8 @@
 		<h2 class="text-3xl font-bold mb-4 text-primary">Ready to Transform Your Nails?</h2>
 		<p class="text-xl mb-8 max-w-2xl mx-auto text-neutral">Book an appointment today and let's create your perfect nail art!</p>
 		<div class="flex flex-col sm:flex-row justify-center gap-4">
-			<button class="btn btn-primary text-lg px-8 py-3 flex items-center justify-center leading-none">Book an Appointment</button>
-			<button class="btn btn-outline border-2 border-accent text-accent hover:bg-accent/10 text-lg px-8 py-3 flex items-center justify-center leading-none">View Services</button>
+			<button class="btn variant-filled-primary">Book an Appointment</button>
+			<button class="btn variant-outline-tertiary">View Services</button>
 		</div>
 	</section>
 </div>

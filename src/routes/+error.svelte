@@ -17,12 +17,12 @@
 	
 	<div class="flex flex-col sm:flex-row justify-center gap-4">
 		<button 
-			class="btn btn-primary px-6 py-3"
+			class="btn variant-filled-primary"
 			on:click={() => window.location.reload()}
 		>
 			Try Again
 		</button>
-		<a href="/" class="btn btn-secondary px-6 py-3">
+		<a href="/" class="btn variant-filled-secondary">
 			Go Home
 		</a>
 	</div>

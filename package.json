@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
+    "@skeletonlabs/skeleton": "^2.11.0",
+    "@skeletonlabs/tw-plugin": "^0.4.1",
     "@sveltejs/adapter-node": "^5.2.13",
     "better-sqlite3": "^9.2.2",
     "drizzle-orm": "^0.29.0"
@@ -27,7 +29,6 @@
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "autoprefixer": "^10.4.16",
-    "daisyui": "^4.0.0",
     "drizzle-kit": "^0.20.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",

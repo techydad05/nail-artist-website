@@ -3,74 +3,133 @@
 @tailwind utilities;
 
 @layer base {
+  /* Enhanced typography using Skeleton tokens */
   h1 {
-    @apply text-4xl font-bold mb-4 text-white;
+    @apply text-4xl font-bold mb-4;
+    color: rgb(var(--color-on-surface));
   }
   
   h2 {
-    @apply text-3xl font-bold mb-3 text-white;
+    @apply text-3xl font-bold mb-3;
+    color: rgb(var(--color-on-surface));
   }
   
   h3 {
-    @apply text-2xl font-bold mb-2 text-white;
+    @apply text-2xl font-bold mb-2;
+    color: rgb(var(--color-on-surface));
   }
   
   p {
-    @apply mb-4 text-gray-300;
-  }
-  
-  .btn {
-    @apply font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105;
-  }
-  
-  .btn-primary {
-    @apply bg-gradient-to-r from-primary to-purple-600 text-white hover:from-purple-600 hover:to-primary shadow-lg hover:shadow-xl;
-  }
-  
-  .btn-secondary {
-    @apply bg-gradient-to-r from-secondary to-pink-600 text-white hover:from-pink-600 hover:to-secondary shadow-lg hover:shadow-xl;
-  }
-
-  .btn-accent {
-    @apply bg-gradient-to-r from-accent to-blue-500 text-white hover:from-blue-500 hover:to-accent shadow-lg hover:shadow-xl;
+    @apply mb-4;
+    color: rgb(var(--color-surface-600-300-token));
   }
 }
 
 body {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(135deg, 
+    rgb(var(--color-surface-900)) 0%, 
+    rgb(var(--color-surface-800)) 50%, 
+    rgb(var(--color-surface-700)) 100%);
   background-attachment: fixed;
   min-height: 100vh;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar using Skeleton tokens */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1f2937;
+  background: rgb(var(--color-surface-500));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #8b5cf6, #ec4899);
+  background: linear-gradient(to bottom, 
+    rgb(var(--color-primary-500)), 
+    rgb(var(--color-secondary-500)));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #7c3aed, #db2777);
+  background: linear-gradient(to bottom, 
+    rgb(var(--color-primary-600)), 
+    rgb(var(--color-secondary-600)));
 }
 
-/* Glowing text effect */
+/* Enhanced Skeleton animations */
 .glow-text {
-  text-shadow: 0 0 10px rgba(139, 92, 246, 0.5), 0 0 20px rgba(139, 92, 246, 0.3), 0 0 30px rgba(139, 92, 246, 0.2);
+  text-shadow: 0 0 10px rgb(var(--color-primary-500) / 0.5), 
+               0 0 20px rgb(var(--color-primary-500) / 0.3), 
+               0 0 30px rgb(var(--color-primary-500) / 0.2);
+  animation: glow-pulse 2s ease-in-out infinite alternate;
 }
 
-/* Card hover effect */
+@keyframes glow-pulse {
+  from {
+    text-shadow: 0 0 10px rgb(var(--color-primary-500) / 0.5), 
+                 0 0 20px rgb(var(--color-primary-500) / 0.3), 
+                 0 0 30px rgb(var(--color-primary-500) / 0.2);
+  }
+  to {
+    text-shadow: 0 0 15px rgb(var(--color-primary-500) / 0.8), 
+                 0 0 25px rgb(var(--color-primary-500) / 0.5), 
+                 0 0 35px rgb(var(--color-primary-500) / 0.3);
+  }
+}
+
+/* Enhanced card hover effect with Skeleton tokens */
 .hover-card {
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hover-card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 20px 40px rgb(var(--color-primary-500) / 0.3);
+}
+
+/* Skeleton-enhanced animations */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

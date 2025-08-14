@@ -118,7 +118,7 @@
 				bind:value={customerName}
 				on:input={(e) => handleInput('customerName', e.target.value)}
 				on:blur={() => touched.customerName = true}
-				class="input input-bordered w-full bg-base-200 text-base-content"
+				class="input"
 				class:input-error={touched.customerName && errors.customerName}
 				placeholder="Enter your full name"
 				required
@@ -140,7 +140,7 @@
 				bind:value={customerEmail}
 				on:input={(e) => handleInput('customerEmail', e.target.value)}
 				on:blur={() => touched.customerEmail = true}
-				class="input input-bordered w-full bg-base-200 text-base-content"
+				class="input"
 				class:input-error={touched.customerEmail && errors.customerEmail}
 				placeholder="your.email@example.com"
 				required
@@ -162,7 +162,7 @@
 				bind:value={customerPhone}
 				on:input={(e) => handleInput('customerPhone', e.target.value)}
 				on:blur={() => touched.customerPhone = true}
-				class="input input-bordered w-full bg-base-200 text-base-content"
+				class="input"
 				class:input-error={touched.customerPhone && errors.customerPhone}
 				placeholder="(555) 123-4567"
 				disabled={isSubmitting}
@@ -182,7 +182,7 @@
 				bind:value={selectedService}
 				on:change={(e) => handleInput('selectedService', e.target.value)}
 				on:blur={() => touched.selectedService = true}
-				class="select select-bordered w-full bg-base-200 text-base-content"
+				class="select"
 				class:select-error={touched.selectedService && errors.selectedService}
 				required
 				disabled={isSubmitting}
@@ -208,7 +208,7 @@
 				id="special-requests"
 				bind:value={specialRequests}
 				rows="3"
-				class="textarea textarea-bordered w-full bg-base-200 text-base-content resize-none"
+				class="textarea"
 				placeholder="Any special requests or preferences..."
 				disabled={isSubmitting}
 			></textarea>

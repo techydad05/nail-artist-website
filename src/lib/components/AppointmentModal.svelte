@@ -1,10 +1,12 @@
 <script>
 	import { onMount, createEventDispatcher } from 'svelte';
+	import { Modal, getModalStore } from '@skeletonlabs/skeleton';
 	import DatePicker from './DatePicker.svelte';
 	import TimeSlotPicker from './TimeSlotPicker.svelte';
 	import BookingForm from './BookingForm.svelte';
 	
 	const dispatch = createEventDispatcher();
+	const modalStore = getModalStore();
 	
 	export let isOpen = false;
 	export let designReference = '';
@@ -148,6 +150,7 @@
 	
 	function closeModal() {
 		isOpen = false;
+		modalStore.close();
 		dispatch('close');
 		resetForm();
 	}
@@ -295,83 +298,70 @@
 <svelte:window on:keydown={handleKeydown} />
 
 {#if isOpen}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-				<div 
-					class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4"
-					on:click={handleBackdropClick}
-					role="dialog"
-					aria-modal="true"
-					aria-labelledby="modal-title"
-				>
-		<div class="bg-base-100 rounded-2xl shadow-2xl max-w-6xl w-full max-h-[95vh] overflow-y-auto">
-			<!-- Modal Header -->
-			<div class="bg-gradient-to-r from-primary to-secondary text-white p-4 sm:p-6 rounded-t-2xl">
-				<div class="flex justify-between items-center">
-					<h2 id="modal-title" class="text-xl sm:text-2xl font-bold flex items-center">
-						<span class="mr-2 text-2xl sm:text-3xl">📅</span> Book an Appointment
-					</h2>
-					<button 
-						class="btn btn-ghost btn-circle text-white hover:bg-white/20"
-						on:click={closeModal}
-						aria-label="Close modal"
-					>
-						✕
-					</button>
-				</div>
-			</div>
+	<div class="modal-backdrop">
+		<div class="modal">
+			<header class="modal-header bg-gradient-to-r from-primary-500 to-secondary-500 text-on-primary-token">
+				<h2 class="modal-title">
+					<span class="mr-2 text-2xl sm:text-3xl">📅</span> Book an Appointment
+				</h2>
+			</header>
 			
-			<!-- Modal Content -->
-			<div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
-				<!-- Left Column: Date and Time Selection -->
-				<div class="space-y-6">
-					<DatePicker 
-						bind:selectedDate
-						{bookedAppointments}
-						{isLoading}
-						on:dateSelected={handleDateSelected}
-					/>
+			<section class="modal-body">
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+					<!-- Left Column: Date and Time Selection -->
+					<div class="space-y-6">
+						<DatePicker 
+							bind:selectedDate
+							{bookedAppointments}
+							{isLoading}
+							on:dateSelected={handleDateSelected}
+						/>
+						
+						<TimeSlotPicker 
+							{selectedDate}
+							bind:selectedTime
+							{bookedAppointments}
+							{isLoading}
+							{availabilityData}
+							on:timeSelected={handleTimeSelected}
+						/>
+					</div>
 					
-					<TimeSlotPicker 
-						{selectedDate}
-						bind:selectedTime
-						{bookedAppointments}
-						{isLoading}
-						{availabilityData}
-						on:timeSelected={handleTimeSelected}
-					/>
-				</div>
-				
-				<!-- Right Column: Booking Form -->
-				<div class="space-y-6">
-					<BookingForm 
-						bind:customerName
-						bind:customerEmail
-						bind:customerPhone
-						bind:selectedService
-						bind:specialRequests
-						{services}
-						{isSubmitting}
-						on:update={handleFormUpdate}
-						on:submit={handleFormSubmit}
-						on:cancel={closeModal}
-					/>
-					
-					<!-- Booking Summary -->
-					{#if selectedDate && selectedTime && selectedService}
-						<div class="bg-base-200 p-4 rounded-lg border border-base-300">
-							<h4 class="font-semibold text-base-content mb-2">Booking Summary</h4>
-							<div class="space-y-1 text-sm text-base-content/80">
-								<p><strong>Date:</strong> {new Date(selectedDate + 'T00:00:00').toLocaleDateString()}</p>
-								<p><strong>Time:</strong> {selectedTime}</p>
-								<p><strong>Service:</strong> {services.find(s => s.id === selectedService)?.name}</p>
-								<p><strong>Duration:</strong> {services.find(s => s.id === selectedService)?.duration}min</p>
-								<p><strong>Price:</strong> {services.find(s => s.id === selectedService)?.price}</p>
+					<!-- Right Column: Booking Form -->
+					<div class="space-y-6">
+						<BookingForm 
+							bind:customerName
+							bind:customerEmail
+							bind:customerPhone
+							bind:selectedService
+							bind:specialRequests
+							{services}
+							{isSubmitting}
+							on:update={handleFormUpdate}
+							on:submit={handleFormSubmit}
+							on:cancel={closeModal}
+						/>
+						
+						<!-- Booking Summary -->
+						{#if selectedDate && selectedTime && selectedService}
+							<div class="card variant-soft-surface p-4">
+								<h4 class="h4 mb-2">Booking Summary</h4>
+								<div class="space-y-1 text-sm">
+									<p><strong>Date:</strong> {new Date(selectedDate + 'T00:00:00').toLocaleDateString()}</p>
+									<p><strong>Time:</strong> {selectedTime}</p>
+									<p><strong>Service:</strong> {services.find(s => s.id === selectedService)?.name}</p>
+									<p><strong>Duration:</strong> {services.find(s => s.id === selectedService)?.duration}min</p>
+									<p><strong>Price:</strong> {services.find(s => s.id === selectedService)?.price}</p>
+								</div>
 							</div>
-						</div>
-					{/if}
+						{/if}
+					</div>
 				</div>
-			</div>
+			</section>
+			
+			<footer class="modal-footer">
+				<button class="btn variant-ghost-surface" on:click={closeModal}>Cancel</button>
+			</footer>
 		</div>
 	</div>
 {/if}

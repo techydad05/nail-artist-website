@@ -348,14 +348,21 @@
 		<!-- User Auth -->
 		<div class="flex items-center gap-3">
 			{#if currentUser}
-				<div class="text-sm text-white">
-					Welcome, {currentUser.name}!
+				<div class="flex items-center gap-2">
+					<div class="avatar">
+						<div class="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center text-white text-sm font-bold">
+							{currentUser.name.charAt(0).toUpperCase()}
+						</div>
+					</div>
+					<div class="text-sm text-white">
+						Welcome, {currentUser.name}!
+					</div>
 				</div>
-				<button class="btn btn-ghost btn-sm text-white" on:click={logout}>
+				<button class="btn variant-ghost btn-sm text-white" on:click={logout}>
 					Logout
 				</button>
 			{:else}
-				<button class="btn btn-primary btn-sm" on:click={() => showAuthModal = true}>
+				<button class="btn variant-filled-primary btn-sm" on:click={() => showAuthModal = true}>
 					Sign In
 				</button>
 			{/if}

@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { showSuccess, showError } from '$lib/stores/toast';
 	
 	let name = '';
 	let email = '';
@@ -14,7 +15,7 @@
 		
 		// Form validation
 		if (!name || !email || !message) {
-			submitError = 'Please fill in all fields.';
+			showError('Please fill in all fields.');
 			isSubmitting = false;
 			return;
 		}
@@ -22,7 +23,7 @@
 		// Email validation
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!emailRegex.test(email)) {
-			submitError = 'Please enter a valid email address.';
+			showError('Please enter a valid email address.');
 			isSubmitting = false;
 			return;
 		}
@@ -32,13 +33,14 @@
 		try {
 			// Simulate API call delay
 			await new Promise(resolve => setTimeout(resolve, 1000));
-			submitSuccess = true;
+			showSuccess('Thank you for your message! We\'ll get back to you soon.');
 			// Reset form
 			name = '';
 			email = '';
 			message = '';
+			submitSuccess = true;
 		} catch (error) {
-			submitError = 'Oops! Something went wrong. Please try again later.';
+			showError('Oops! Something went wrong. Please try again later.');
 		} finally {
 			isSubmitting = false;
 		}
@@ -73,67 +75,80 @@
 	
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 		<!-- Contact Form -->
-		<section class="bg-white rounded-2xl p-8 shadow-lg border-2 border-primary/20">
-			<h2 class="text-3xl font-bold mb-6 text-primary">Send a Message</h2>
+		<section class="card">
+			<header class="card-header">
+				<h2 class="h2">Send a Message</h2>
+			</header>
+			<section class="p-4">
 			
-			<form on:submit|preventDefault={handleSubmit}>
-				<div class="mb-6">
-					<label for="name" class="block text-lg font-medium mb-2 text-neutral">Your Name</label>
+			<form on:submit|preventDefault={handleSubmit} class="space-y-6">
+				<label class="label">
+					<span>Your Name</span>
 					<input 
-						id="name" 
+						class="input" 
 						type="text" 
 						bind:value={name}
-						class="w-full px-4 py-3 rounded-xl border-2 border-primary/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
 						placeholder="Enter your name"
-					>
-				</div>
+						required
+					/>
+				</label>
 				
-				<div class="mb-6">
-					<label for="email" class="block text-lg font-medium mb-2 text-neutral">Email Address</label>
+				<label class="label">
+					<span>Email Address</span>
 					<input 
-						id="email" 
+						class="input" 
 						type="email" 
 						bind:value={email}
-						class="w-full px-4 py-3 rounded-xl border-2 border-primary/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
 						placeholder="Enter your email"
-					>
-				</div>
+						required
+					/>
+				</label>
 				
-				<div class="mb-6">
-					<label for="message" class="block text-lg font-medium mb-2 text-neutral">Your Message</label>
+				<label class="label">
+					<span>Your Message</span>
 					<textarea 
-						id="message" 
+						class="textarea" 
 						bind:value={message}
 						rows="5"
-						class="w-full px-4 py-3 rounded-xl border-2 border-primary/30 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
 						placeholder="Tell us about your nail dreams..."
+						required
 					></textarea>
-				</div>
+				</label>
 				
 				{#if submitError}
-					<div class="mb-4 p-4 bg-error/20 text-error rounded-xl">
-						{submitError}
-					</div>
+					<aside class="alert variant-filled-error">
+						<div class="alert-message">
+							<p>{submitError}</p>
+						</div>
+					</aside>
 				{/if}
 				
 				{#if submitSuccess}
-					<div class="mb-4 p-4 bg-success/20 text-success rounded-xl">
-						Thank you for your message! We'll get back to you soon.
-					</div>
+					<aside class="alert variant-filled-success">
+						<div class="alert-message">
+							<p>Thank you for your message! We'll get back to you soon.</p>
+						</div>
+					</aside>
 				{/if}
 				
 				<button 
 					type="submit" 
 					disabled={isSubmitting}
-					class="btn btn-primary w-full text-lg py-3 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center leading-none"
+					class="btn variant-filled-primary w-full"
 				>
 					{#if isSubmitting}
-						Sending...
+						<div class="flex items-center gap-2">
+							<div class="progress-bar w-4 h-4">
+								<div class="progress-bar-filled bg-white animate-pulse"></div>
+							</div>
+							<span>Sending...</span>
+						</div>
 					{:else}
-						Send Message ✨
+						<span>Send Message ✨</span>
 					{/if}
 				</button>
 			</form>
+			</section>
 		</section>
 		
 		<!-- Contact Information -->
@@ -142,12 +157,14 @@
 			
 			<div class="space-y-6">
 				{#each contactInfo as info}
-					<div class="bg-white rounded-2xl p-6 shadow-lg border-2 border-accent/20 flex items-start">
-						<div class="text-3xl mr-4">{info.icon}</div>
-						<div>
-							<h3 class="text-xl font-bold mb-2 text-primary">{info.title}</h3>
-							<p class="text-neutral whitespace-pre-line">{info.details}</p>
-						</div>
+					<div class="card">
+						<section class="p-4 flex items-start">
+							<div class="text-3xl mr-4">{info.icon}</div>
+							<div>
+								<h3 class="h3 mb-2">{info.title}</h3>
+								<p class="whitespace-pre-line">{info.details}</p>
+							</div>
+						</section>
 					</div>
 				{/each}
 			</div>

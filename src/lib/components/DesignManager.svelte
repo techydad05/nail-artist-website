@@ -238,7 +238,7 @@
 		role="dialog"
 		aria-modal="true"
 	>
-		<div class="bg-base-100 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+		<div class="modal max-w-4xl">
 			<!-- Header -->
 			<div class="bg-gradient-to-r from-primary to-secondary text-white p-6">
 				<div class="flex justify-between items-center">
@@ -255,27 +255,27 @@
 			</div>
 			
 			<!-- Tabs -->
-			<div class="tabs tabs-boxed bg-base-200 p-2">
+			<div class="flex gap-2 p-2 bg-surface-200-700-token rounded-lg">
 				<button 
-					class="tab {activeTab === 'save' ? 'tab-active' : ''}"
+					class="btn {activeTab === 'save' ? 'variant-filled-primary' : 'variant-ghost'}"
 					on:click={() => activeTab = 'save'}
 				>
 					Save Design
 				</button>
 				<button 
-					class="tab {activeTab === 'my-designs' ? 'tab-active' : ''}"
+					class="btn {activeTab === 'my-designs' ? 'variant-filled-primary' : 'variant-ghost'}"
 					on:click={() => activeTab = 'my-designs'}
 				>
 					My Designs ({savedDesigns.length})
 				</button>
 				<button 
-					class="tab {activeTab === 'public' ? 'tab-active' : ''}"
+					class="btn {activeTab === 'public' ? 'variant-filled-primary' : 'variant-ghost'}"
 					on:click={() => activeTab = 'public'}
 				>
 					Public Gallery ({publicDesigns.length})
 				</button>
 				<button 
-					class="tab {activeTab === 'export' ? 'tab-active' : ''}"
+					class="btn {activeTab === 'export' ? 'variant-filled-primary' : 'variant-ghost'}"
 					on:click={() => activeTab = 'export'}
 				>
 					Export
@@ -369,7 +369,7 @@
 						{:else}
 							<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 								{#each savedDesigns as design}
-									<div class="card bg-base-200 shadow-md">
+									<div class="card variant-soft-surface">
 										<div class="card-body p-4">
 											<h4 class="card-title text-base">{design.name}</h4>
 											<p class="text-sm text-gray-500">
@@ -420,7 +420,7 @@
 						{:else}
 							<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 								{#each publicDesigns as design}
-									<div class="card bg-base-200 shadow-md">
+									<div class="card variant-soft-surface">
 										<div class="card-body p-4">
 											<h4 class="card-title text-base">{design.name}</h4>
 											<p class="text-sm text-gray-500">
@@ -445,7 +445,7 @@
 					<div class="space-y-4">
 						<h3 class="text-lg font-semibold">Export Design</h3>
 						
-						<div class="bg-base-200 p-4 rounded-lg">
+						<div class="card variant-soft-surface p-4">
 							<h4 class="font-medium mb-2">Export Options</h4>
 							<p class="text-sm text-gray-600 mb-4">
 								Export your current design as an image to share or print.

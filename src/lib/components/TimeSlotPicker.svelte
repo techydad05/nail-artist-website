@@ -7,7 +7,7 @@
 	export let selectedDate = '';
 	export let selectedTime = '';
 	export let bookedAppointments = [];
-	export let isLoading = false;
+	export const isLoading = false;
 	export let availabilityData = new Map(); // Pre-loaded availability data
 	
 	// All possible time slots
@@ -244,7 +244,7 @@
 		{/if}
 		
 		<!-- Business Hours Info -->
-		<div class="bg-base-200 rounded-lg p-3">
+		<div class="card variant-soft-surface p-3">
 			<h4 class="font-medium text-base-content mb-2">Business Hours</h4>
 			<div class="text-sm text-base-content/70 space-y-1">
 				<p>Monday - Friday: 9:00 AM - 5:00 PM</p>

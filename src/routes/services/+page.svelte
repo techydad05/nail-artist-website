@@ -61,30 +61,52 @@
 	<!-- Services Grid -->
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
 		{#each services as service}
-			<div class="bg-white rounded-2xl p-8 shadow-lg border-2 border-primary/20 hover:shadow-xl transition-all duration-300">
-				<div class="flex justify-between items-start mb-4">
-					<h2 class="text-2xl font-bold text-primary">{service.title}</h2>
-					<div class="text-right">
-						<div class="text-2xl font-bold text-secondary">{service.price}</div>
-						<div class="text-neutral">{service.duration}</div>
+			<div class="card card-hover animate-slide-up hover-card">
+				<header class="card-header">
+					<div class="flex justify-between items-start">
+						<div>
+							<h2 class="h2">{service.title}</h2>
+							<div class="flex gap-2 mt-2">
+								{#if service.title.includes('Gel')}
+									<span class="badge variant-filled-primary">Premium</span>
+								{/if}
+								{#if service.title.includes('Art')}
+									<span class="badge variant-filled-secondary">Creative</span>
+								{/if}
+								{#if service.title.includes('Spa')}
+									<span class="badge variant-filled-tertiary">Relaxing</span>
+								{/if}
+								{#if service.title.includes('Acrylic')}
+									<span class="badge variant-filled-success">Long-lasting</span>
+								{/if}
+							</div>
+						</div>
+						<div class="text-right">
+							<div class="text-2xl font-bold text-secondary-500">{service.price}</div>
+							<div class="text-surface-600-300-token">{service.duration}</div>
+						</div>
 					</div>
-				</div>
+				</header>
 				
-				<p class="text-lg mb-6 text-neutral">{service.description}</p>
+				<section class="p-4">
+					<p class="text-lg mb-6">{service.description}</p>
+					
+					<div class="mb-6">
+						<h3 class="h3 mb-3 text-tertiary-500">What's Included:</h3>
+						<ul class="space-y-2">
+							{#each service.inclusions as inclusion}
+								<li class="flex items-start">
+									<span class="text-secondary-500 mr-2">✓</span>
+									<span>{inclusion}</span>
+								</li>
+								{/each}
+							</ul>
+					</div>
+				</section>
 				
-				<div class="mb-6">
-					<h3 class="text-xl font-bold mb-3 text-accent">What's Included:</h3>
-					<ul class="space-y-2">
-						{#each service.inclusions as inclusion}
-							<li class="flex items-start">
-								<span class="text-secondary mr-2">✓</span>
-								<span class="text-neutral">{inclusion}</span>
-							</li>
-							{/each}
-						</ul>
-				</div>
-				
-				<button class="btn btn-primary w-full flex items-center justify-center leading-none py-2">Book {service.title}</button>
+				<footer class="card-footer">
+					<button class="btn variant-filled-primary w-full">Book {service.title}</button>
+				</footer>
 			</div>
 		{/each}
 	</div>
@@ -95,9 +117,11 @@
 		
 		<div class="max-w-3xl mx-auto space-y-6">
 			{#each faqs as faq}
-				<div class="bg-white rounded-2xl p-6 shadow-lg border-2 border-accent/20">
-					<h3 class="text-xl font-bold mb-3 text-primary">{faq.question}</h3>
-					<p class="text-neutral">{faq.answer}</p>
+				<div class="card">
+					<section class="p-4">
+						<h3 class="h3 mb-3">{faq.question}</h3>
+						<p>{faq.answer}</p>
+					</section>
 				</div>
 			{/each}
 		</div>
@@ -107,6 +131,6 @@
 	<section class="text-center py-12 rounded-3xl bg-gradient-to-r from-primary/10 to-accent/10 border-2 border-primary/20">
 		<h2 class="text-3xl font-bold mb-4 text-primary">Ready to Pamper Yourself?</h2>
 		<p class="text-xl mb-8 max-w-2xl mx-auto text-neutral">Book an appointment today and experience the perfect blend of professionalism and creativity!</p>
-		<button class="btn btn-primary text-lg px-8 py-3 flex items-center justify-center leading-none">Book an Appointment</button>
+		<button class="btn variant-filled-primary">Book an Appointment</button>
 	</section>
 </div>

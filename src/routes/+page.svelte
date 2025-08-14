@@ -132,12 +132,12 @@
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <button 
-                        class="btn btn-primary text-base md:text-lg px-6 md:px-8 py-2 flex items-center justify-center leading-none"
+                        class="btn variant-filled-primary"
                         on:click={() => showAppointmentModal = true}
                     >
                         Book an Appointment
                     </button>
-                    <button class="btn btn-secondary text-base md:text-lg px-6 md:px-8 py-2 flex items-center justify-center leading-none">
+                    <button class="btn variant-filled-secondary">
                         Try Virtual Designer
                     </button>
                 </div>
@@ -166,7 +166,7 @@
                             <div class="text-5xl mb-4">{service.icon}</div>
                             <h3 class="text-2xl font-bold mb-3 text-white">{service.title}</h3>
                             <p class="text-gray-200 grow">{service.description}</p>
-                            <button class="mt-4 btn btn-sm btn-outline text-white border-white hover:bg-white hover:text-primary mt-auto flex items-center justify-center leading-none py-2">
+                            <button class="btn variant-outline btn-sm mt-4">
                                 Learn More
                             </button>
                         </div>
@@ -246,14 +246,14 @@
                         <div class="text-4xl mb-4">🎉</div>
                         <h3 class="text-2xl font-bold text-white mb-3">New Client Special</h3>
                         <p class="text-gray-200 mb-4">Get 20% off your first nail service! Perfect time to try our premium treatments.</p>
-                        <button class="btn btn-accent">Claim Offer</button>
+                        <button class="btn variant-filled-tertiary">Claim Offer</button>
                     </div>
                     <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 hover-card border border-white/20 hover:border-white/40 transition-all duration-300">
                         <div class="text-4xl mb-4">💅</div>
                         <h3 class="text-2xl font-bold text-white mb-3">Mani-Pedi Combo</h3>
                         <p class="text-gray-200 mb-4">Book both services together and save $15! Includes complimentary hand massage.</p>
                         <button 
-                            class="btn btn-accent"
+                            class="btn variant-filled-tertiary"
                             on:click={() => showAppointmentModal = true}
                         >
                             Book Now

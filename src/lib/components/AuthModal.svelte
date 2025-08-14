@@ -93,90 +93,68 @@
 <svelte:window on:keydown={handleKeydown} />
 
 {#if isOpen}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-	<div 
-		class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
-		on:click={handleBackdropClick}
-		role="dialog"
-		aria-modal="true"
-		aria-labelledby="auth-modal-title"
-	>
-		<div class="bg-base-100 rounded-2xl shadow-2xl max-w-md w-full">
-			<!-- Modal Header -->
-			<div class="bg-gradient-to-r from-primary to-secondary text-white p-6 rounded-t-2xl">
-				<div class="flex justify-between items-center">
-					<h2 id="auth-modal-title" class="text-xl font-bold flex items-center">
-						<span class="mr-2 text-2xl">👤</span> 
-						{isLogin ? 'Welcome Back!' : 'Join Us!'}
-					</h2>
-					<button 
-						class="btn btn-ghost btn-circle text-white hover:bg-white/20"
-						on:click={closeModal}
-						aria-label="Close modal"
-					>
-						✕
-					</button>
-				</div>
-			</div>
+	<div class="modal-backdrop">
+		<div class="modal max-w-md">
+			<header class="modal-header bg-gradient-to-r from-primary-500 to-secondary-500 text-on-primary-token">
+				<h2 class="modal-title">
+					<span class="mr-2 text-2xl">👤</span> 
+					{isLogin ? 'Welcome Back!' : 'Join Us!'}
+				</h2>
+			</header>
 			
-			<!-- Modal Content -->
-			<div class="p-6">
+			<section class="modal-body">
 				<p class="text-center text-base-content/70 mb-6">
 					{isLogin ? 'Sign in to save your nail designs' : 'Create an account to save and share your designs'}
 				</p>
 				
 				<form on:submit|preventDefault={handleSubmit} class="space-y-4">
 					{#if !isLogin}
-						<div>
-							<label for="name" class="block text-sm font-medium text-base-content mb-1">
-								Full Name *
-							</label>
+						<label class="label">
+							<span>Full Name *</span>
 							<input
-								id="name"
+								class="input"
 								type="text"
 								bind:value={name}
-								class="input input-bordered w-full bg-base-200 text-base-content"
 								placeholder="Enter your full name"
 								required={!isLogin}
 								disabled={isSubmitting}
-							>
-						</div>
+							/>
+						</label>
 					{/if}
 					
-					<div>
-						<label for="email" class="block text-sm font-medium text-base-content mb-1">
-							Email Address *
-						</label>
+					<label class="label">
+						<span>Email Address *</span>
 						<input
-							id="email"
+							class="input"
 							type="email"
 							bind:value={email}
-							class="input input-bordered w-full bg-base-200 text-base-content"
 							placeholder="your.email@example.com"
 							required
 							disabled={isSubmitting}
-						>
-					</div>
+						/>
+					</label>
 					
 					{#if error}
-						<div class="alert alert-error">
-							<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-							</svg>
-							<span>{error}</span>
-						</div>
+						<aside class="alert variant-filled-error">
+							<div class="alert-message">
+								<p>{error}</p>
+							</div>
+						</aside>
 					{/if}
 					
 					<div class="flex flex-col gap-3 pt-4">
 						<button
 							type="submit"
-							class="btn btn-primary w-full"
+							class="btn variant-filled-primary w-full"
 							disabled={isSubmitting}
 						>
 							{#if isSubmitting}
-								<span class="loading loading-spinner loading-sm"></span>
-								{isLogin ? 'Signing In...' : 'Creating Account...'}
+								<div class="flex items-center gap-2">
+									<div class="progress-bar w-4 h-4">
+										<div class="progress-bar-filled bg-white animate-pulse"></div>
+									</div>
+									{isLogin ? 'Signing In...' : 'Creating Account...'}
+								</div>
 							{:else}
 								{isLogin ? 'Sign In' : 'Create Account'}
 							{/if}
@@ -184,7 +162,7 @@
 						
 						<button
 							type="button"
-							class="btn btn-ghost w-full"
+							class="btn variant-ghost w-full"
 							on:click={toggleMode}
 							disabled={isSubmitting}
 						>
@@ -194,11 +172,15 @@
 				</form>
 				
 				<div class="mt-6 text-center">
-					<p class="text-xs text-base-content/50">
+					<p class="text-xs opacity-50">
 						By continuing, you agree to save your designs locally and optionally share them with our nail technicians.
 					</p>
 				</div>
-			</div>
+			</section>
+			
+			<footer class="modal-footer">
+				<button class="btn variant-ghost-surface" on:click={closeModal}>Cancel</button>
+			</footer>
 		</div>
 	</div>
 {/if}

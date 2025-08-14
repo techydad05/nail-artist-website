@@ -217,7 +217,7 @@
 							id="name-input"
 							type="text" 
 							bind:value={name}
-							class="w-full px-3 py-2 bg-base-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+							class="input"
 							placeholder="Sparkle McSparkles"
 						>
 					</div>
@@ -228,7 +228,7 @@
 							id="email-input"
 							type="email" 
 							bind:value={email}
-							class="w-full px-3 py-2 bg-base-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+							class="input"
 							placeholder="sparkle@example.com"
 						>
 					</div>
@@ -238,7 +238,7 @@
 						<textarea 
 							id="message-input"
 							bind:value={message}
-							class="w-full px-3 py-2 bg-base-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary h-24 resize-none"
+							class="textarea h-24"
 							placeholder="Tell us about your {currentTheme?.name.toLowerCase()} dreams..."
 						></textarea>
 					</div>

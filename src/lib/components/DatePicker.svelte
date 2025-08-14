@@ -149,7 +149,7 @@
 <div class="space-y-4">
 	<h3 class="text-xl font-semibold mb-4 text-base-content">Select a Date</h3>
 	
-	<div class="calendar-container bg-base-200 border border-base-300 rounded-lg overflow-hidden">
+	<div class="calendar-container bg-surface-200-700-token border border-surface-300-600-token rounded-lg overflow-hidden">
 		<!-- Calendar Header -->
 		<div class="bg-gradient-to-r from-primary to-secondary text-white p-4 flex justify-between items-center">
 			<button 
@@ -200,7 +200,7 @@
 							class:bg-success={day.hasAvailableSlots && day.isCurrentMonth && !day.isToday}
 							class:bg-warning={day.bookedSlots > 0 && day.hasAvailableSlots && day.isCurrentMonth && !day.isToday}
 							class:bg-error={!day.hasAvailableSlots && day.isCurrentMonth && !day.isPast && !day.isWeekend}
-							class:bg-base-300={day.isPast || day.isWeekend}
+							class:bg-surface-300-600-token={day.isPast || day.isWeekend}
 							class:text-white={(day.isToday && day.isCurrentMonth) || (day.hasAvailableSlots && day.isCurrentMonth && !day.isToday) || (!day.hasAvailableSlots && day.isCurrentMonth && !day.isPast && !day.isWeekend)}
 							class:ring-2={selectedDate === day.fullDate}
 							class:ring-primary={selectedDate === day.fullDate}
@@ -243,7 +243,7 @@
 			<span>Fully Booked</span>
 		</div>
 		<div class="flex items-center">
-			<div class="w-4 h-4 bg-base-300 rounded mr-2"></div>
+			<div class="w-4 h-4 bg-surface-300-600-token rounded mr-2"></div>
 			<span>Unavailable</span>
 		</div>
 		<div class="flex items-center">
