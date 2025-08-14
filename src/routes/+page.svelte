@@ -2,7 +2,8 @@
 	import { onMount } from 'svelte';
 	import EnhancedSlider from '../lib/components/EnhancedSlider.svelte';
 	import ScrollAnimator from '../lib/components/ScrollAnimator.svelte';
-	import VirtualNailDesigner from '../lib/components/VirtualNailDesigner.svelte';
+	import EnhancedNailDesigner from '../lib/components/EnhancedNailDesigner.svelte';
+	import DesignShowcase from '../lib/components/DesignShowcase.svelte';
 	import AppointmentModal from '../lib/components/AppointmentModal.svelte';
 	
 	// Modal state
@@ -210,20 +211,25 @@
         </section>
     </ScrollAnimator>
 
+    <!-- Community Designs Showcase -->
+    <ScrollAnimator animationType="slide-up" delay="200">
+        <DesignShowcase />
+    </ScrollAnimator>
+
     <!-- Virtual Nail Designer Section -->
     <ScrollAnimator animationType="slide-up" delay="200">
-        <section class="py-12 mb-12">
+        <section id="nail-designer" class="py-12 mb-12">
             <div class="max-w-4xl mx-auto text-center mb-12">
                 <h2 class="text-4xl font-bold text-white glow-text mb-6 flex items-center justify-center">
                     <span class="mr-3">💅</span> Virtual Nail Designer <span class="ml-3">✨</span>
                 </h2>
                 <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-                    Try our interactive nail designer to visualize your perfect nail art before your appointment!
+                    Create, save, and share your perfect nail art designs with our interactive designer!
                 </p>
             </div>
             
-            <div class="max-w-3xl mx-auto">
-                <VirtualNailDesigner />
+            <div class="max-w-6xl mx-auto">
+                <EnhancedNailDesigner />
             </div>
         </section>
     </ScrollAnimator>

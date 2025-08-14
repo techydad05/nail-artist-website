@@ -166,6 +166,32 @@
 			if (designReference) {
 				specialRequests = `Virtual Design: ${designReference}\n\n`;
 			}
+			
+			// Load saved design data if available
+			const savedDesignData = localStorage.getItem('appointment-design');
+			if (savedDesignData) {
+				try {
+					const designData = JSON.parse(savedDesignData);
+					if (designData.nails) {
+						const designDetails = designData.nails
+							.map((nail, index) => {
+								const details = [];
+								if (nail.baseColor !== '#FFB6C1') details.push(`Color: ${nail.baseColor}`);
+								if (nail.design) details.push(`Pattern: ${nail.design.pattern}`);
+								if (nail.stickers.length > 0) details.push(`${nail.stickers.length} stickers`);
+								return details.length > 0 ? `${nail.name}: ${details.join(', ')}` : null;
+							})
+							.filter(Boolean)
+							.join('\n');
+						
+						if (designDetails && !specialRequests.includes(designDetails)) {
+							specialRequests += `\nDesign Details:\n${designDetails}`;
+						}
+					}
+				} catch (error) {
+					console.log('Could not load design data');
+				}
+			}
 		}, 100);
 	}
 	

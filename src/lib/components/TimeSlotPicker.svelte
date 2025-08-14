@@ -1,5 +1,5 @@
 <script>
-	import { createEventDispatcher, onMount } from 'svelte';
+	import { createEventDispatcher, onMount, onDestroy } from 'svelte';
 	
 	const dispatch = createEventDispatcher();
 	
@@ -18,6 +18,9 @@
 	let availableSlots = [];
 	let loadingAvailability = false;
 	let errorMessage = '';
+	let availabilityCache = new Map();
+	let lastFetchedDate = '';
+	let fetchTimeout;
 	
 	// Get available times for the selected date
 	function getAvailableTimesForDate(date) {
@@ -30,19 +33,36 @@
 		return timeSlots.filter(time => !bookedTimes.includes(time));
 	}
 	
-	// Fetch availability from API with retry logic
+	// Fetch availability from API with caching and debouncing
 	async function fetchAvailability(date, retryCount = 0) {
 		if (!date) {
 			availableSlots = [];
 			return;
 		}
 		
+		// Prevent duplicate requests for the same date
+		if (date === lastFetchedDate && loadingAvailability) {
+			return;
+		}
+		
+		// Check cache first
+		if (availabilityCache.has(date)) {
+			const cached = availabilityCache.get(date);
+			// Use cache if it's less than 5 minutes old
+			if (Date.now() - cached.timestamp < 5 * 60 * 1000) {
+				availableSlots = cached.slots;
+				errorMessage = '';
+				return;
+			}
+		}
+		
+		lastFetchedDate = date;
 		loadingAvailability = true;
 		errorMessage = '';
 		
 		try {
 			const controller = new AbortController();
-			const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+			const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
 			
 			const response = await fetch(`/api/appointments/availability?date=${date}`, {
 				signal: controller.signal
@@ -57,7 +77,15 @@
 			const data = await response.json();
 			
 			if (data.success) {
-				availableSlots = data.availableSlots || getAvailableTimesForDate(date);
+				const slots = data.availableSlots || getAvailableTimesForDate(date);
+				availableSlots = slots;
+				
+				// Cache the result
+				availabilityCache.set(date, {
+					slots: slots,
+					timestamp: Date.now()
+				});
+				
 				errorMessage = ''; // Clear any previous errors
 			} else {
 				throw new Error(data.error?.message || 'Failed to load availability');
@@ -66,17 +94,24 @@
 			console.error('Error fetching availability:', error);
 			
 			if (error.name === 'AbortError') {
-				errorMessage = 'Request timed out. Using cached availability.';
-			} else if (retryCount < 2) {
-				// Retry up to 2 times
-				setTimeout(() => fetchAvailability(date, retryCount + 1), 1000 * (retryCount + 1));
+				errorMessage = 'Request timed out. Using local availability.';
+			} else if (retryCount < 1) {
+				// Only retry once to prevent excessive requests
+				setTimeout(() => fetchAvailability(date, retryCount + 1), 2000);
 				return;
 			} else {
-				errorMessage = `Network error: ${error.message}. Using cached availability.`;
+				errorMessage = 'Network error. Using local availability.';
 			}
 			
 			// Fallback to local calculation
-			availableSlots = getAvailableTimesForDate(date);
+			const fallbackSlots = getAvailableTimesForDate(date);
+			availableSlots = fallbackSlots;
+			
+			// Cache fallback result for shorter time
+			availabilityCache.set(date, {
+				slots: fallbackSlots,
+				timestamp: Date.now() - 4 * 60 * 1000 // Expire in 1 minute
+			});
 		} finally {
 			loadingAvailability = false;
 		}
@@ -162,16 +197,37 @@
 		return slotTime <= today;
 	}
 	
-	// Reactive updates
-	$: if (selectedDate) {
-		fetchAvailability(selectedDate);
-		// Reset selected time when date changes
-		if (selectedTime && !availableSlots.includes(selectedTime)) {
-			selectedTime = '';
+	// Debounced availability fetching
+	function debouncedFetchAvailability(date) {
+		// Clear any existing timeout
+		if (fetchTimeout) {
+			clearTimeout(fetchTimeout);
 		}
+		
+		// Set a new timeout to prevent rapid successive calls
+		fetchTimeout = setTimeout(() => {
+			fetchAvailability(date);
+		}, 300); // 300ms debounce
+	}
+	
+	// Reactive updates with debouncing
+	$: if (selectedDate && selectedDate !== lastFetchedDate) {
+		debouncedFetchAvailability(selectedDate);
+	}
+	
+	// Reset selected time when date changes and slots are loaded
+	$: if (selectedTime && availableSlots.length > 0 && !availableSlots.includes(selectedTime)) {
+		selectedTime = '';
 	}
 	
 	$: sortedAvailableSlots = sortTimeSlots(availableSlots);
+	
+	// Cleanup on component destroy
+	onDestroy(() => {
+		if (fetchTimeout) {
+			clearTimeout(fetchTimeout);
+		}
+	});
 </script>
 
 {#if selectedDate}
@@ -181,9 +237,9 @@
 		</h3>
 		
 		{#if loadingAvailability || isLoading}
-			<div class="flex justify-center items-center py-8">
-				<span class="loading loading-spinner loading-md"></span>
-				<span class="ml-2">Loading available times...</span>
+			<div class="flex justify-center items-center py-4">
+				<span class="loading loading-spinner loading-sm"></span>
+				<span class="ml-2 text-sm">Loading times...</span>
 			</div>
 		{:else if errorMessage}
 			<div class="alert alert-warning">
@@ -195,7 +251,7 @@
 		{/if}
 		
 		{#if sortedAvailableSlots.length > 0}
-			<div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+			<div class="grid grid-cols-2 sm:grid-cols-3 gap-2 transition-opacity duration-300" class:opacity-50={loadingAvailability}>
 				{#each sortedAvailableSlots as time}
 					{@const isPast = isTimeSlotPast(time)}
 					<button

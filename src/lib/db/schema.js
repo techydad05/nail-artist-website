@@ -62,3 +62,23 @@ export const adminUsers = sqliteTable('admin_users', {
   createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
   lastLogin: text('last_login')
 });
+
+// Regular users table for nail designer and appointments
+export const users = sqliteTable('users', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  email: text('email').notNull().unique(),
+  name: text('name'),
+  createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
+  lastLogin: text('last_login')
+});
+
+// Saved nail designs table
+export const savedDesigns = sqliteTable('saved_designs', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  userId: integer('user_id').references(() => users.id),
+  designName: text('design_name').notNull(),
+  designData: text('design_data').notNull(), // JSON string
+  isPublic: integer('is_public', { mode: 'boolean' }).default(false),
+  createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`)
+});
