@@ -9,9 +9,11 @@ if (browser) {
 	const storedTheme = localStorage.getItem('theme') || 'nail-artist';
 	theme.set(storedTheme);
 	
-	// Apply theme to document
+	// Apply theme to document immediately with higher priority
 	document.documentElement.setAttribute('data-theme', storedTheme);
 	document.body.setAttribute('data-theme', storedTheme);
+	document.documentElement.style.setProperty('--color-primary-500', '236 72 153');
+	document.documentElement.style.setProperty('--color-primary-600', '212 65 138');
 }
 
 // Subscribe to theme changes and persist to localStorage

@@ -1,8 +1,10 @@
 <script>
 	import '../app.css';
 	import { initializeStores, Modal, getModalStore } from '@skeletonlabs/skeleton';
+	import { onMount } from 'svelte';
 	import Navigation from '../lib/components/Navigation.svelte';
 	import ThemeToggle from '../lib/components/ThemeToggle.svelte';
+	import LightSwitch from '../lib/components/LightSwitch.svelte';
 	import ToastContainer from '../lib/components/ToastContainer.svelte';
 	import AppointmentModal from '../lib/components/AppointmentModal.svelte';
 	
@@ -14,6 +16,12 @@
 	function openAppointmentModal() {
 		showAppointmentModal = true;
 	}
+	
+	onMount(() => {
+		// Initialize with default theme
+		const currentTheme = document.documentElement.getAttribute('data-theme') || 'skeleton';
+		document.body.setAttribute('data-theme', currentTheme);
+	});
 	
 	// Listen for appointment modal events
 	if (typeof window !== 'undefined') {
@@ -29,27 +37,33 @@
 		<div class="flex h-16 items-center justify-between">
 			<!-- Logo -->
 			<div class="flex items-center space-x-4">
-				<a href="/" class="text-2xl font-bold text-primary-500 hover:text-primary-400 transition-colors">
-					Fallons
+				<a href="/" class="flex flex-col items-start hover:opacity-80 transition-opacity py-2">
+					<div class="logo-script text-3xl text-primary-500">
+						Fallon's
+					</div>
+					<div class="logo-sans text-sm text-surface-600-300-token -mt-1">
+						Flawless Features
+					</div>
 				</a>
 			</div>
 			
 			<!-- Desktop Navigation -->
 			<nav class="hidden md:flex items-center space-x-8">
-				<a href="/" class="text-surface-700-200-token hover:text-primary-500 transition-colors font-medium">Home</a>
-				<a href="/services" class="text-surface-700-200-token hover:text-primary-500 transition-colors font-medium">Services</a>
-				<a href="/gallery" class="text-surface-700-200-token hover:text-primary-500 transition-colors font-medium">Gallery</a>
-				<a href="/contact" class="text-surface-700-200-token hover:text-primary-500 transition-colors font-medium">Contact</a>
+				<a href="/" class="text-surface-700-200-token hover:text-surface-900-50-token transition-colors font-medium px-3 py-2 rounded-md hover:bg-primary-500/10">Home</a>
+				<a href="/services" class="text-surface-700-200-token hover:text-surface-900-50-token transition-colors font-medium px-3 py-2 rounded-md hover:bg-primary-500/10">Services</a>
+				<a href="/gallery" class="text-surface-700-200-token hover:text-surface-900-50-token transition-colors font-medium px-3 py-2 rounded-md hover:bg-primary-500/10">Gallery</a>
+				<a href="/contact" class="text-surface-700-200-token hover:text-surface-900-50-token transition-colors font-medium px-3 py-2 rounded-md hover:bg-primary-500/10">Contact</a>
 			</nav>
 			
 			<!-- Actions -->
-			<div class="flex items-center space-x-4">
+			<div class="flex items-center space-x-2">
 				<button 
 					class="btn variant-filled-primary btn-sm"
 					on:click={openAppointmentModal}
 				>
 					Book Appointment
 				</button>
+				<LightSwitch />
 				<ThemeToggle />
 				
 				<!-- Mobile Menu Button -->
@@ -74,7 +88,10 @@
 		<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
 			<!-- Brand -->
 			<div class="space-y-4">
-				<h3 class="text-xl font-bold text-primary-500">Fallons</h3>
+				<div class="flex flex-col">
+					<h3 class="logo-script text-2xl text-primary-500">Fallon's</h3>
+					<div class="logo-sans text-xs text-surface-600-300-token -mt-1">Flawless Features</div>
+				</div>
 				<p class="text-surface-600-300-token text-sm">
 					Professional nail artistry with a creative touch. Where beauty meets precision.
 				</p>

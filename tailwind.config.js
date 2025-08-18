@@ -3,6 +3,7 @@ import { nailArtistTheme } from './src/lib/themes/nail-artist-theme.js';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     './src/**/*.{html,js,svelte,ts}',
     require('path').join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
@@ -41,6 +42,42 @@ export default {
         preset: [
           {
             name: 'skeleton',
+            enhancements: true,
+          },
+          {
+            name: 'wintry',
+            enhancements: true,
+          },
+          {
+            name: 'modern',
+            enhancements: true,
+          },
+          {
+            name: 'rocket',
+            enhancements: true,
+          },
+          {
+            name: 'seafoam',
+            enhancements: true,
+          },
+          {
+            name: 'vintage',
+            enhancements: true,
+          },
+          {
+            name: 'sahara',
+            enhancements: true,
+          },
+          {
+            name: 'hamlindigo',
+            enhancements: true,
+          },
+          {
+            name: 'gold-nouveau',
+            enhancements: true,
+          },
+          {
+            name: 'crimson',
             enhancements: true,
           }
         ],

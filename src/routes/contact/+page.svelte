@@ -72,113 +72,111 @@
 
 <div class="container mx-auto px-4 py-12">
 	<div class="text-center mb-16">
-		<h1 class="text-5xl font-bold mb-6">Get in Touch</h1>
+		<h1 class="text-5xl font-bold mb-6 text-surface-900-50-token">Get in Touch</h1>
 		<p class="text-xl text-surface-600-300-token max-w-2xl mx-auto">Ready to book your appointment or have questions? We'd love to hear from you.</p>
 	</div>
 	
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 		<!-- Contact Form -->
-		<section class="card">
-			<header class="card-header">
-				<h2 class="h2">Send a Message</h2>
+		<section class="card bg-surface-50-900-token">
+			<header class="card-header bg-gradient-to-r from-primary-500 to-secondary-500">
+				<h2 class="text-2xl font-bold text-white">Send a Message</h2>
 			</header>
-			<section class="p-4">
-			
-			<form on:submit|preventDefault={handleSubmit} class="space-y-6">
-				<label class="label">
-					<span>Your Name</span>
-					<input 
-						class="input" 
-						type="text" 
-						bind:value={name}
-						placeholder="Enter your name"
-						required
-					/>
-				</label>
-				
-				<label class="label">
-					<span>Email Address</span>
-					<input 
-						class="input" 
-						type="email" 
-						bind:value={email}
-						placeholder="Enter your email"
-						required
-					/>
-				</label>
-				
-				<label class="label">
-					<span>Your Message</span>
-					<textarea 
-						class="textarea" 
-						bind:value={message}
-						rows="5"
-						placeholder="Tell us about your nail dreams..."
-						required
-					></textarea>
-				</label>
-				
-				{#if submitError}
-					<aside class="alert variant-filled-error">
-						<div class="alert-message">
+			<div class="p-6">
+				<form on:submit|preventDefault={handleSubmit} class="space-y-6">
+					<label class="label">
+						<span class="text-surface-900-50-token">Your Name</span>
+						<input 
+							class="input bg-surface-100-800-token text-surface-900-50-token border-surface-300-600-token focus:border-primary-500" 
+							type="text" 
+							bind:value={name}
+							placeholder="Enter your name"
+							required
+						/>
+					</label>
+					
+					<label class="label">
+						<span class="text-surface-900-50-token">Email Address</span>
+						<input 
+							class="input bg-surface-100-800-token text-surface-900-50-token border-surface-300-600-token focus:border-primary-500" 
+							type="email" 
+							bind:value={email}
+							placeholder="Enter your email"
+							required
+						/>
+					</label>
+					
+					<label class="label">
+						<span class="text-surface-900-50-token">Your Message</span>
+						<textarea 
+							class="textarea bg-surface-100-800-token text-surface-900-50-token border-surface-300-600-token focus:border-primary-500" 
+							bind:value={message}
+							rows="5"
+							placeholder="Tell us about your nail dreams..."
+							required
+						></textarea>
+					</label>
+					
+					{#if submitError}
+						<aside class="alert variant-filled-error">
 							<p>{submitError}</p>
-						</div>
-					</aside>
-				{/if}
-				
-				{#if submitSuccess}
-					<aside class="alert variant-filled-success">
-						<div class="alert-message">
-							<p>Thank you for your message! We'll get back to you soon.</p>
-						</div>
-					</aside>
-				{/if}
-				
-				<button 
-					type="submit" 
-					disabled={isSubmitting}
-					class="btn variant-filled-primary w-full"
-				>
-					{#if isSubmitting}
-						<div class="flex items-center gap-2">
-							<div class="progress-bar w-4 h-4">
-								<div class="progress-bar-filled bg-white animate-pulse"></div>
-							</div>
-							<span>Sending...</span>
-						</div>
-					{:else}
-						<span>Send Message ✨</span>
+						</aside>
 					{/if}
-				</button>
-			</form>
-			</section>
+					
+					{#if submitSuccess}
+						<aside class="alert variant-filled-success">
+							<p>Thank you for your message! We'll get back to you soon.</p>
+						</aside>
+					{/if}
+					
+					<button 
+						type="submit" 
+						disabled={isSubmitting}
+						class="btn variant-filled-primary w-full"
+					>
+						{#if isSubmitting}
+							<div class="flex items-center justify-center gap-2">
+								<div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+								<span>Sending...</span>
+							</div>
+						{:else}
+							<span>Send Message ✨</span>
+						{/if}
+					</button>
+				</form>
+			</div>
 		</section>
 		
 		<!-- Contact Information -->
 		<section>
-			<h2 class="text-3xl font-bold mb-6 text-primary">Visit Our Studio</h2>
+			<h2 class="text-3xl font-bold mb-6 text-primary-500">Visit Our Studio</h2>
 			
-			<div class="space-y-6">
+			<div class="space-y-4">
 				{#each contactInfo as info}
-					<div class="card">
-						<section class="p-4 flex items-start">
-							<div class="text-3xl mr-4">{info.icon}</div>
+					<div class="card bg-surface-50-900-token hover:shadow-lg transition-shadow">
+						<div class="p-6 flex items-start">
+							<div class="text-3xl mr-4 flex-shrink-0">{info.icon}</div>
 							<div>
-								<h3 class="h3 mb-2">{info.title}</h3>
-								<p class="whitespace-pre-line">{info.details}</p>
+								<h3 class="text-lg font-semibold text-surface-900-50-token mb-2">{info.title}</h3>
+								<p class="text-surface-600-300-token whitespace-pre-line">{info.details}</p>
 							</div>
-						</section>
+						</div>
 					</div>
 				{/each}
 			</div>
 			
 			<!-- Map Placeholder -->
-			<div class="mt-12 bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-8 text-center border-2 border-dashed border-primary/30">
-				<div class="text-5xl mb-4">🗺️</div>
-				<h3 class="text-2xl font-bold mb-2 text-primary">Studio Location</h3>
-				<p class="text-neutral mb-4">Interactive map coming soon!</p>
-				<div class="bg-gray-200 border-2 border-dashed border-gray-300 rounded-xl w-full h-64 flex items-center justify-center text-gray-500">
-					Map Placeholder
+			<div class="mt-8 card bg-surface-100-800-token border-2 border-dashed border-primary-500/30">
+				<div class="p-6 text-center">
+					<div class="text-4xl mb-3">🗺️</div>
+					<h3 class="text-xl font-bold mb-2 text-primary-500">Studio Location</h3>
+					<p class="text-surface-600-300-token mb-4">Interactive map coming soon!</p>
+					<div class="bg-surface-200-700-token border-2 border-dashed border-surface-300-600-token rounded-lg w-full h-48 flex items-center justify-center text-surface-500-400-token">
+						<div class="text-center">
+							<div class="text-2xl mb-2">📍</div>
+							<p>Map Placeholder</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>

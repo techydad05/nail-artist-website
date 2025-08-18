@@ -173,13 +173,13 @@
 											value={service.id}
 											class="sr-only"
 										>
-										<div class="card p-4 border-2 transition-all {selectedService === service.id ? 'border-primary-500 bg-primary-50' : 'border-surface-300-600-token hover:border-primary-300'}">
+										<div class="card p-4 border-2 transition-all {selectedService === service.id ? 'border-primary-500 bg-primary-500/10' : 'border-surface-300-600-token hover:border-primary-300'}">
 											<div class="flex justify-between items-center">
 												<div>
 													<h4 class="font-semibold text-surface-900-50-token">{service.name}</h4>
 													<p class="text-sm text-surface-600-300-token">{service.duration}</p>
 												</div>
-												<div class="text-primary-500 font-bold">{service.price}</div>
+												<div class="font-bold text-primary-500">{service.price}</div>
 											</div>
 										</div>
 									</label>

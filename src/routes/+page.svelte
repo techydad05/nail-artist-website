@@ -1,4 +1,6 @@
 <script>
+	import NailMascot from '../lib/components/NailMascot.svelte';
+	
 	function openAppointmentModal() {
 		window.dispatchEvent(new CustomEvent('open-appointment-modal'));
 	}
@@ -55,49 +57,67 @@
 </svelte:head>
 
 <!-- Hero Section -->
-<section class="relative py-20 lg:py-32 overflow-hidden">
-	<div class="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-secondary-500/5 to-tertiary-500/10"></div>
-	<div class="container mx-auto px-4 relative z-10">
-		<div class="max-w-4xl mx-auto text-center">
-			<h1 class="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
-				Beautiful Nails,<br>Perfectly Crafted
-			</h1>
-			<p class="text-xl lg:text-2xl text-surface-600-300-token mb-8 max-w-2xl mx-auto leading-relaxed">
-				Experience professional nail artistry where creativity meets precision. Every detail matters.
-			</p>
-			<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<section class="container mx-auto px-4 py-12 sm:py-16 lg:py-32">
+	<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 items-center">
+		<!-- Text Content -->
+		<div class="space-y-6 sm:space-y-8 text-center lg:text-left lg:pr-4 order-2 lg:order-1">
+			<div class="space-y-4">
+				<h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+					<span class="bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone">
+						Beautiful Nails,<br>Perfectly Crafted
+					</span>
+				</h1>
+				<p class="text-lg sm:text-xl text-surface-600-300-token max-w-2xl mx-auto lg:mx-0 lg:max-w-none">
+					Experience professional nail artistry where creativity meets precision. Every detail matters.
+				</p>
+			</div>
+			
+			<div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
 				<button 
-					class="btn variant-filled-primary btn-lg"
+					class="btn variant-filled-primary"
 					on:click={openAppointmentModal}
 				>
-					Book Appointment
+					<span>📅</span>
+					<span>Book Appointment</span>
 				</button>
-				<a href="/gallery" class="btn variant-outline-primary btn-lg">
-					View Gallery
+				<a href="/gallery" class="btn variant-outline-primary">
+					<span>🎨</span>
+					<span>View Gallery</span>
 				</a>
+			</div>
+		</div>
+		
+		<!-- Animated Mascot -->
+		<div class="flex justify-center lg:justify-start lg:pl-4 order-1 lg:order-2">
+			<div class="scale-75 sm:scale-90 lg:scale-100">
+				<NailMascot />
 			</div>
 		</div>
 	</div>
 </section>
 
 <!-- Services Section -->
-<section class="py-20 bg-surface-100-800-token">
-	<div class="container mx-auto px-4">
-		<div class="text-center mb-16">
-			<h2 class="text-4xl lg:text-5xl font-bold mb-4">Our Services</h2>
+<section class="container mx-auto px-4 py-20">
+	<div class="text-center space-y-10">
+		<div class="space-y-4">
+			<h2 class="h2 font-bold">Our Services</h2>
 			<p class="text-xl text-surface-600-300-token max-w-2xl mx-auto">
 				From classic manicures to intricate nail art, we offer a full range of professional nail services.
 			</p>
 		</div>
 		
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 			{#each services as service}
-				<div class="card card-hover bg-surface-50-900-token p-6 text-center">
-					<div class="text-4xl mb-4">{service.icon}</div>
-					<h3 class="h3 mb-3">{service.title}</h3>
-					<p class="text-surface-600-300-token mb-4">{service.description}</p>
-					<div class="text-primary-500 font-semibold mb-4">{service.price}</div>
-					<button class="btn variant-outline-primary btn-sm w-full">Learn More</button>
+				<div class="card card-hover p-6 text-center space-y-4">
+					<div class="text-4xl">{service.icon}</div>
+					<div class="space-y-2">
+						<h3 class="h3 font-bold">{service.title}</h3>
+						<p class="text-surface-600-300-token">{service.description}</p>
+						<div class="text-primary-500 font-semibold">{service.price}</div>
+					</div>
+					<button class="btn variant-outline-primary btn-sm w-full">
+						Learn More
+					</button>
 				</div>
 			{/each}
 		</div>
@@ -194,23 +214,27 @@
 </section>
 
 <!-- CTA Section -->
-<section class="py-20 bg-gradient-to-r from-primary-500 to-secondary-500">
-	<div class="container mx-auto px-4 text-center">
-		<h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">
-			Ready for Beautiful Nails?
-		</h2>
-		<p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-			Book your appointment today and experience the difference professional nail artistry makes.
-		</p>
+<section class="container mx-auto px-4 py-20">
+	<div class="card p-8 text-center space-y-6 bg-gradient-to-br variant-gradient-primary-secondary">
+		<div class="space-y-4">
+			<h2 class="h2 font-bold text-on-primary-token">
+				Ready for Beautiful Nails?
+			</h2>
+			<p class="text-xl text-on-primary-token/90 max-w-2xl mx-auto">
+				Book your appointment today and experience the difference professional nail artistry makes.
+			</p>
+		</div>
 		<div class="flex flex-col sm:flex-row gap-4 justify-center">
 			<button 
-				class="btn variant-filled text-primary-500 bg-white hover:bg-surface-100 btn-lg"
+				class="btn variant-filled-surface"
 				on:click={openAppointmentModal}
 			>
-				Book Now
+				<span>📅</span>
+				<span>Book Now</span>
 			</button>
-			<a href="/contact" class="btn variant-outline text-white border-white hover:bg-white hover:text-primary-500 btn-lg">
-				Contact Us
+			<a href="/contact" class="btn variant-outline border-on-primary-token text-on-primary-token hover:variant-filled-surface">
+				<span>📞</span>
+				<span>Contact Us</span>
 			</a>
 		</div>
 	</div>
