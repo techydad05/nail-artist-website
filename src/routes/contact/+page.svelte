@@ -78,61 +78,61 @@
 	
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 		<!-- Contact Form -->
-		<section class="card bg-surface-50-900-token">
-			<header class="card-header bg-gradient-to-r from-primary-500 to-secondary-500">
+		<section class="bg-surface-50-900-token rounded-xl shadow-lg overflow-hidden">
+			<header class="bg-gradient-to-r from-primary-500 to-secondary-500 px-6 py-4">
 				<h2 class="text-2xl font-bold text-white">Send a Message</h2>
 			</header>
 			<div class="p-6">
 				<form on:submit|preventDefault={handleSubmit} class="space-y-6">
-					<label class="label">
-						<span class="text-surface-900-50-token">Your Name</span>
+					<div class="space-y-2">
+						<label class="block text-sm font-medium text-surface-900-50-token">Your Name</label>
 						<input 
-							class="input bg-surface-100-800-token text-surface-900-50-token border-surface-300-600-token focus:border-primary-500" 
+							class="w-full px-4 py-3 rounded-lg border border-surface-300-600-token bg-surface-100-800-token text-surface-900-50-token placeholder-surface-500-400-token focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors" 
 							type="text" 
 							bind:value={name}
 							placeholder="Enter your name"
 							required
 						/>
-					</label>
+					</div>
 					
-					<label class="label">
-						<span class="text-surface-900-50-token">Email Address</span>
+					<div class="space-y-2">
+						<label class="block text-sm font-medium text-surface-900-50-token">Email Address</label>
 						<input 
-							class="input bg-surface-100-800-token text-surface-900-50-token border-surface-300-600-token focus:border-primary-500" 
+							class="w-full px-4 py-3 rounded-lg border border-surface-300-600-token bg-surface-100-800-token text-surface-900-50-token placeholder-surface-500-400-token focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors" 
 							type="email" 
 							bind:value={email}
 							placeholder="Enter your email"
 							required
 						/>
-					</label>
+					</div>
 					
-					<label class="label">
-						<span class="text-surface-900-50-token">Your Message</span>
+					<div class="space-y-2">
+						<label class="block text-sm font-medium text-surface-900-50-token">Your Message</label>
 						<textarea 
-							class="textarea bg-surface-100-800-token text-surface-900-50-token border-surface-300-600-token focus:border-primary-500" 
+							class="w-full px-4 py-3 rounded-lg border border-surface-300-600-token bg-surface-100-800-token text-surface-900-50-token placeholder-surface-500-400-token focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none" 
 							bind:value={message}
 							rows="5"
 							placeholder="Tell us about your nail dreams..."
 							required
 						></textarea>
-					</label>
+					</div>
 					
 					{#if submitError}
-						<aside class="alert variant-filled-error">
-							<p>{submitError}</p>
-						</aside>
+						<div class="bg-error-50 border border-error-200 rounded-lg p-4">
+							<p class="text-error-700 text-sm">{submitError}</p>
+						</div>
 					{/if}
 					
 					{#if submitSuccess}
-						<aside class="alert variant-filled-success">
-							<p>Thank you for your message! We'll get back to you soon.</p>
-						</aside>
+						<div class="bg-success-50 border border-success-200 rounded-lg p-4">
+							<p class="text-success-700 text-sm">Thank you for your message! We'll get back to you soon.</p>
+						</div>
 					{/if}
 					
 					<button 
 						type="submit" 
 						disabled={isSubmitting}
-						class="btn variant-filled-primary w-full"
+						class="w-full bg-primary-500 hover:bg-primary-600 disabled:bg-primary-300 text-white font-semibold py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
 					>
 						{#if isSubmitting}
 							<div class="flex items-center justify-center gap-2">

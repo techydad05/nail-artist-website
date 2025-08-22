@@ -1,34 +1,85 @@
 <script>
-	import { onMount } from 'svelte';
-	import { fly } from 'svelte/transition';
+	import { onMount } from "svelte";
+	import { fly } from "svelte/transition";
 
 	let mounted = false;
-	let currentTheme = 'skeleton';
+	let currentTheme = "skeleton";
 	let isOpen = false;
 
 	// Skeleton.dev's exact theme configuration
 	const themes = [
-		{ name: 'skeleton', label: 'Skeleton', icon: '💀', colors: ['#0ea5e9', '#84cc16'] },
-		{ name: 'wintry', label: 'Wintry', icon: '🌨️', colors: ['#0ea5e9', '#06b6d4'] },
-		{ name: 'modern', label: 'Modern', icon: '🤖', colors: ['#6366f1', '#8b5cf6'] },
-		{ name: 'rocket', label: 'Rocket', icon: '🚀', colors: ['#f97316', '#ef4444'] },
-		{ name: 'seafoam', label: 'Seafoam', icon: '🧜‍♀️', colors: ['#10b981', '#06b6d4'] },
-		{ name: 'vintage', label: 'Vintage', icon: '📻', colors: ['#d97706', '#dc2626'] },
-		{ name: 'sahara', label: 'Sahara', icon: '🏜️', colors: ['#f59e0b', '#f97316'] },
-		{ name: 'hamlindigo', label: 'Hamlindigo', icon: '🎭', colors: ['#8b5cf6', '#a855f7'] },
-		{ name: 'gold-nouveau', label: 'Gold Nouveau', icon: '✨', colors: ['#f59e0b', '#eab308'] },
-		{ name: 'crimson', label: 'Crimson', icon: '🌹', colors: ['#dc2626', '#ef4444'] }
+		{
+			name: "skeleton",
+			label: "Skeleton",
+			icon: "💀",
+			colors: ["#0ea5e9", "#84cc16"],
+		},
+		{
+			name: "wintry",
+			label: "Wintry",
+			icon: "🌨️",
+			colors: ["#0ea5e9", "#06b6d4"],
+		},
+		{
+			name: "modern",
+			label: "Modern",
+			icon: "🤖",
+			colors: ["#6366f1", "#8b5cf6"],
+		},
+		{
+			name: "rocket",
+			label: "Rocket",
+			icon: "🚀",
+			colors: ["#f97316", "#ef4444"],
+		},
+		{
+			name: "seafoam",
+			label: "Seafoam",
+			icon: "🧜‍♀️",
+			colors: ["#10b981", "#06b6d4"],
+		},
+		{
+			name: "vintage",
+			label: "Vintage",
+			icon: "📻",
+			colors: ["#d97706", "#dc2626"],
+		},
+		{
+			name: "sahara",
+			label: "Sahara",
+			icon: "🏜️",
+			colors: ["#f59e0b", "#f97316"],
+		},
+		{
+			name: "hamlindigo",
+			label: "Hamlindigo",
+			icon: "🎭",
+			colors: ["#8b5cf6", "#a855f7"],
+		},
+		{
+			name: "gold-nouveau",
+			label: "Gold Nouveau",
+			icon: "✨",
+			colors: ["#f59e0b", "#eab308"],
+		},
+		{
+			name: "crimson",
+			label: "Crimson",
+			icon: "🌹",
+			colors: ["#dc2626", "#ef4444"],
+		},
 	];
 
 	onMount(() => {
 		mounted = true;
-		currentTheme = document.documentElement.getAttribute('data-theme') || 'skeleton';
+		currentTheme =
+			document.documentElement.getAttribute("data-theme") || "modern";
 	});
 
 	function setTheme(themeName) {
 		currentTheme = themeName;
-		document.documentElement.setAttribute('data-theme', themeName);
-		document.body.setAttribute('data-theme', themeName);
+		document.documentElement.setAttribute("data-theme", themeName);
+		document.body.setAttribute("data-theme", themeName);
 		isOpen = false;
 	}
 
@@ -37,20 +88,21 @@
 	}
 
 	function handleClickOutside(event) {
-		if (!event.target.closest('.theme-selector')) {
+		if (!event.target.closest(".theme-selector")) {
 			isOpen = false;
 		}
 	}
 
 	$: if (mounted) {
 		if (isOpen) {
-			document.addEventListener('click', handleClickOutside);
+			document.addEventListener("click", handleClickOutside);
 		} else {
-			document.removeEventListener('click', handleClickOutside);
+			document.removeEventListener("click", handleClickOutside);
 		}
 	}
 
-	$: currentThemeData = themes.find(t => t.name === currentTheme) || themes[0];
+	$: currentThemeData =
+		themes.find((t) => t.name === currentTheme) || themes[0];
 </script>
 
 {#if mounted}
@@ -77,12 +129,21 @@
 							{#each themes as theme}
 								<li>
 									<button
-										class="option w-full {currentTheme === theme.name ? '!variant-filled-primary' : ''}"
+										class="option w-full {currentTheme ===
+										theme.name
+											? '!variant-filled-primary'
+											: ''}"
 										on:click={() => setTheme(theme.name)}
 									>
-										<span class="flex-auto text-left flex items-center gap-4">
-											<span class="text-lg">{theme.icon}</span>
-											<span class="flex-auto">{theme.label}</span>
+										<span
+											class="flex-auto text-left flex items-center gap-4"
+										>
+											<span class="text-lg"
+												>{theme.icon}</span
+											>
+											<span class="flex-auto"
+												>{theme.label}</span
+											>
 										</span>
 										<div class="flex gap-1">
 											{#each theme.colors as color}

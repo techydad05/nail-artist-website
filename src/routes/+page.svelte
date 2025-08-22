@@ -1,5 +1,5 @@
 <script>
-	import NailMascot from '../lib/components/NailMascot.svelte';
+	import Logo from '../lib/components/Logo.svelte';
 	
 	function openAppointmentModal() {
 		window.dispatchEvent(new CustomEvent('open-appointment-modal'));
@@ -57,41 +57,65 @@
 </svelte:head>
 
 <!-- Hero Section -->
-<section class="container mx-auto px-4 py-12 sm:py-16 lg:py-32">
-	<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 items-center">
-		<!-- Text Content -->
-		<div class="space-y-6 sm:space-y-8 text-center lg:text-left lg:pr-4 order-2 lg:order-1">
-			<div class="space-y-4">
-				<h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-					<span class="bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone">
-						Beautiful Nails,<br>Perfectly Crafted
-					</span>
-				</h1>
-				<p class="text-lg sm:text-xl text-surface-600-300-token max-w-2xl mx-auto lg:mx-0 lg:max-w-none">
-					Experience professional nail artistry where creativity meets precision. Every detail matters.
-				</p>
+<section class="relative overflow-hidden min-h-screen">
+	<!-- Background Video -->
+	<div class="absolute inset-0 w-full h-full">
+		<video 
+			class="w-full h-full object-cover hero-video" 
+			autoplay 
+			muted 
+			loop 
+			playsinline
+		>
+			<source src="/doing-nails.mp4" type="video/mp4">
+			<!-- Fallback for browsers that don't support video -->
+			<div class="w-full h-full bg-gradient-to-br from-primary-500/20 to-secondary-500/20"></div>
+		</video>
+		
+		<!-- Video Overlay - makes it subtle -->
+		<div class="absolute inset-0 bg-surface-50-900-token/85"></div>
+		
+		<!-- Additional subtle overlay for better text contrast -->
+		<div class="absolute inset-0 bg-gradient-to-r from-surface-50-900-token/60 via-transparent to-surface-50-900-token/60"></div>
+	</div>
+	
+	<!-- Content -->
+	<div class="relative z-10 container mx-auto px-4 py-12 sm:py-16 lg:py-32">
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8 items-center">
+			<!-- Text Content -->
+			<div class="space-y-6 sm:space-y-8 text-center lg:text-left lg:pr-4 order-2 lg:order-1">
+				<div class="space-y-4">
+					<h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+						<span class="bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone">
+							Beautiful Nails,<br>Perfectly Crafted
+						</span>
+					</h1>
+					<p class="text-lg sm:text-xl text-surface-600-300-token max-w-2xl mx-auto lg:mx-0 lg:max-w-none">
+						Experience professional nail artistry where creativity meets precision. Every detail matters.
+					</p>
+				</div>
+				
+				<div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+					<button 
+						class="btn variant-filled-primary"
+						on:click={openAppointmentModal}
+					>
+						<span>📅</span>
+						<span>Book Appointment</span>
+					</button>
+					<a href="/gallery" class="btn variant-outline-primary">
+						<span>🎨</span>
+						<span>View Gallery</span>
+					</a>
+				</div>
 			</div>
 			
-			<div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-				<button 
-					class="btn variant-filled-primary"
-					on:click={openAppointmentModal}
-				>
-					<span>📅</span>
-					<span>Book Appointment</span>
-				</button>
-				<a href="/gallery" class="btn variant-outline-primary">
-					<span>🎨</span>
-					<span>View Gallery</span>
-				</a>
-			</div>
-		</div>
-		
-		<!-- Animated Mascot -->
-		<div class="flex justify-center lg:justify-start lg:pl-4 order-1 lg:order-2">
-			<div class="scale-75 sm:scale-90 lg:scale-100">
-				<NailMascot />
-			</div>
+			<!-- Logo Showcase -->
+			<!-- <div class="flex justify-center lg:justify-start lg:pl-4 order-1 lg:order-2">
+				<div class="scale-90 sm:scale-100">
+					<Logo size="large" showBackground={true} />
+				</div>
+			</div> -->
 		</div>
 	</div>
 </section>

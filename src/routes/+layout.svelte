@@ -5,6 +5,7 @@
 	import Navigation from '../lib/components/Navigation.svelte';
 	import ThemeToggle from '../lib/components/ThemeToggle.svelte';
 	import LightSwitch from '../lib/components/LightSwitch.svelte';
+	import Logo from '../lib/components/Logo.svelte';
 	import ToastContainer from '../lib/components/ToastContainer.svelte';
 	import AppointmentModal from '../lib/components/AppointmentModal.svelte';
 	
@@ -12,15 +13,21 @@
 	const modalStore = getModalStore();
 	
 	let showAppointmentModal = false;
+	let showMobileMenu = false;
 	
 	function openAppointmentModal() {
 		showAppointmentModal = true;
 	}
 	
+	function toggleMobileMenu() {
+		showMobileMenu = !showMobileMenu;
+	}
+	
 	onMount(() => {
-		// Initialize with default theme
-		const currentTheme = document.documentElement.getAttribute('data-theme') || 'skeleton';
+		// Initialize with default theme (modern dark)
+		const currentTheme = document.documentElement.getAttribute('data-theme') || 'modern';
 		document.body.setAttribute('data-theme', currentTheme);
+		document.documentElement.classList.add('dark');
 	});
 	
 	// Listen for appointment modal events
@@ -32,23 +39,18 @@
 </script>
 
 <!-- Modern Header -->
-<header class="sticky top-0 z-50 w-full border-b border-surface-300-600-token bg-surface-50-900-token/80 backdrop-blur-md">
-	<div class="container mx-auto px-4">
-		<div class="flex h-16 items-center justify-between">
+<header class="sticky top-0 z-50 w-full border-b border-surface-300-600-token bg-surface-50-900-token/90 backdrop-blur-md shadow-sm">
+	<div class="w-full px-6 max-w-none">
+		<div class="flex h-20 sm:h-24 items-center justify-between">
 			<!-- Logo -->
-			<div class="flex items-center space-x-4">
-				<a href="/" class="flex flex-col items-start hover:opacity-80 transition-opacity py-2">
-					<div class="logo-script text-3xl text-primary-500">
-						Fallon's
-					</div>
-					<div class="logo-sans text-sm text-surface-600-300-token -mt-1">
-						Flawless Features
-					</div>
+			<div class="flex items-center">
+				<a href="/" class="hover:opacity-80 transition-all duration-300 hover:scale-105 p-2 -m-2 rounded-xl hover:bg-surface-100-800-token/50">
+					<Logo size="small" showBackground={false} />
 				</a>
 			</div>
 			
 			<!-- Desktop Navigation -->
-			<nav class="hidden md:flex items-center space-x-8">
+			<nav class="hidden lg:flex items-center space-x-8">
 				<a href="/" class="text-surface-700-200-token hover:text-surface-900-50-token transition-colors font-medium px-3 py-2 rounded-md hover:bg-primary-500/10">Home</a>
 				<a href="/services" class="text-surface-700-200-token hover:text-surface-900-50-token transition-colors font-medium px-3 py-2 rounded-md hover:bg-primary-500/10">Services</a>
 				<a href="/gallery" class="text-surface-700-200-token hover:text-surface-900-50-token transition-colors font-medium px-3 py-2 rounded-md hover:bg-primary-500/10">Gallery</a>
@@ -56,24 +58,52 @@
 			</nav>
 			
 			<!-- Actions -->
-			<div class="flex items-center space-x-2">
+			<div class="flex items-center space-x-2 sm:space-x-3">
 				<button 
-					class="btn variant-filled-primary btn-sm"
+					class="btn variant-filled-primary btn-sm hidden sm:inline-flex"
 					on:click={openAppointmentModal}
 				>
 					Book Appointment
+				</button>
+				<button 
+					class="btn variant-filled-primary btn-sm sm:hidden px-3"
+					on:click={openAppointmentModal}
+				>
+					Book
 				</button>
 				<LightSwitch />
 				<ThemeToggle />
 				
 				<!-- Mobile Menu Button -->
-				<button class="md:hidden btn btn-sm variant-ghost-surface">
-					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-					</svg>
+				<button 
+					class="lg:hidden btn btn-sm variant-ghost-surface p-2"
+					on:click={toggleMobileMenu}
+					aria-label="Toggle mobile menu"
+				>
+					{#if showMobileMenu}
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+						</svg>
+					{:else}
+						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+						</svg>
+					{/if}
 				</button>
 			</div>
 		</div>
+		
+		<!-- Mobile Navigation -->
+		{#if showMobileMenu}
+			<div class="lg:hidden absolute top-full left-0 right-0 bg-surface-50-900-token border-t border-surface-300-600-token shadow-lg z-50">
+				<nav class="px-6 py-4 space-y-2">
+					<a href="/" class="block text-surface-700-200-token hover:text-surface-900-50-token transition-colors font-medium px-3 py-2 rounded-md hover:bg-primary-500/10" on:click={() => showMobileMenu = false}>Home</a>
+					<a href="/services" class="block text-surface-700-200-token hover:text-surface-900-50-token transition-colors font-medium px-3 py-2 rounded-md hover:bg-primary-500/10" on:click={() => showMobileMenu = false}>Services</a>
+					<a href="/gallery" class="block text-surface-700-200-token hover:text-surface-900-50-token transition-colors font-medium px-3 py-2 rounded-md hover:bg-primary-500/10" on:click={() => showMobileMenu = false}>Gallery</a>
+					<a href="/contact" class="block text-surface-700-200-token hover:text-surface-900-50-token transition-colors font-medium px-3 py-2 rounded-md hover:bg-primary-500/10" on:click={() => showMobileMenu = false}>Contact</a>
+				</nav>
+			</div>
+		{/if}
 	</div>
 </header>
 
@@ -88,10 +118,7 @@
 		<div class="grid grid-cols-1 md:grid-cols-4 gap-8">
 			<!-- Brand -->
 			<div class="space-y-4">
-				<div class="flex flex-col">
-					<h3 class="logo-script text-2xl text-primary-500">Fallon's</h3>
-					<div class="logo-sans text-xs text-surface-600-300-token -mt-1">Flawless Features</div>
-				</div>
+				<Logo size="medium" showBackground={false} />
 				<p class="text-surface-600-300-token text-sm">
 					Professional nail artistry with a creative touch. Where beauty meets precision.
 				</p>

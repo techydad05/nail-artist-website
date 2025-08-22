@@ -6,15 +6,16 @@
 
 	onMount(() => {
 		mounted = true;
-		// Check initial theme
-		isDark = document.documentElement.classList.contains('dark') || 
-		         localStorage.getItem('theme') === 'dark';
+		// Default to dark theme
+		isDark = localStorage.getItem('theme') === 'light' ? false : true;
 		
 		// Apply initial state
 		if (isDark) {
 			document.documentElement.classList.add('dark');
+			localStorage.setItem('theme', 'dark');
 		} else {
 			document.documentElement.classList.remove('dark');
+			localStorage.setItem('theme', 'light');
 		}
 	});
 
