@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="modern" class="dark %sveltekit.theme%">
+<html lang="en" data-theme="skeleton" class="dark" %sveltekit.theme%>
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" type="image/svg+xml" />
@@ -8,9 +8,35 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+		<script>
+			// Theme initialization - prevents FOUC
+			(function() {
+				if (typeof window === 'undefined') return;
+				try {
+					const savedTheme = localStorage.getItem('skeleton-theme') || 'skeleton';
+					const savedDarkMode = localStorage.getItem('skeleton-dark-mode');
+					const isDark = savedDarkMode !== null ? savedDarkMode === 'true' : true;
+					const html = document.documentElement;
+					const body = document.body;
+					
+					if (html) html.setAttribute('data-theme', savedTheme);
+					if (body) body.setAttribute('data-theme', savedTheme);
+					
+					if (isDark && html) {
+						html.classList.add('dark');
+						html.classList.remove('light');
+					} else if (html) {
+						html.classList.add('light');
+						html.classList.remove('dark');
+					}
+				} catch (error) {
+					console.warn('Theme initialization error:', error);
+				}
+			})();
+		</script>
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover" data-theme="modern" class="dark">
+	<body data-sveltekit-preload-data="hover" data-theme="skeleton">
 		<div style="display: contents" class="h-full overflow-hidden">%sveltekit.body%</div>
 	</body>
 </html>

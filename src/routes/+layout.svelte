@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { initializeStores, Modal, getModalStore } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
+	import { initializeTheme } from '../lib/stores/theme.js';
 	import Navigation from '../lib/components/Navigation.svelte';
 	import ThemeToggle from '../lib/components/ThemeToggle.svelte';
 	import LightSwitch from '../lib/components/LightSwitch.svelte';
@@ -24,10 +25,8 @@
 	}
 	
 	onMount(() => {
-		// Initialize with default theme (modern dark)
-		const currentTheme = document.documentElement.getAttribute('data-theme') || 'modern';
-		document.body.setAttribute('data-theme', currentTheme);
-		document.documentElement.classList.add('dark');
+		// Initialize theme system
+		initializeTheme();
 	});
 	
 	// Listen for appointment modal events

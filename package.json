@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "dev:force": "node scripts/dev-server-cross-platform.js",
     "build": "vite build",
     "preview": "vite preview",
     "start": "node build",
@@ -15,15 +16,18 @@
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate:sqlite",
     "db:migrate": "node src/lib/db/migrate.js",
-    "db:seed": "node scripts/seed-database.js"
+    "db:seed": "node scripts/seed-database.js",
+    "admin:setup": "node scripts/setup-admin.js"
   },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
     "@skeletonlabs/skeleton": "^2.11.0",
     "@skeletonlabs/tw-plugin": "^0.4.1",
     "@sveltejs/adapter-node": "^5.2.13",
+    "bcryptjs": "^3.0.2",
     "better-sqlite3": "^9.2.2",
-    "drizzle-orm": "^0.29.0"
+    "drizzle-orm": "^0.29.0",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "@sveltejs/kit": "^2.0.0",

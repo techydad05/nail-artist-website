@@ -94,7 +94,7 @@
 					<p class="text-lg mb-6">{service.description}</p>
 					
 					<div class="mb-6">
-						<h3 class="h3 mb-3 text-tertiary-500">What's Included:</h3>
+						<h3 class="h3 mb-3">What's Included:</h3>
 						<ul class="space-y-2">
 							{#each service.inclusions as inclusion}
 								<li class="flex items-start">
@@ -120,7 +120,7 @@
 	
 	<!-- FAQ Section -->
 	<section class="mb-16">
-		<h2 class="text-3xl font-bold mb-8 text-center text-primary">Frequently Asked Questions</h2>
+		<h2 class="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
 		
 		<div class="max-w-3xl mx-auto space-y-6">
 			{#each faqs as faq}
@@ -135,9 +135,9 @@
 	</section>
 	
 	<!-- CTA Section -->
-	<section class="text-center py-12 rounded-3xl bg-gradient-to-r from-primary/10 to-accent/10 border-2 border-primary/20">
-		<h2 class="text-3xl font-bold mb-4 text-primary">Ready to Pamper Yourself?</h2>
-		<p class="text-xl mb-8 max-w-2xl mx-auto text-neutral">Book an appointment today and experience the perfect blend of professionalism and creativity!</p>
+	<section class="text-center py-12 rounded-3xl bg-gradient-to-r from-primary-500/10 to-secondary-500/10 border-2 border-primary-500/20">
+		<h2 class="text-3xl font-bold mb-4 text-primary-500">Ready to Pamper Yourself?</h2>
+		<p class="text-xl mb-8 max-w-2xl mx-auto text-surface-600-300-token">Book an appointment today and experience the perfect blend of professionalism and creativity!</p>
 		<button 
 			class="btn variant-filled-primary"
 			on:click={() => window.dispatchEvent(new CustomEvent('open-appointment-modal'))}

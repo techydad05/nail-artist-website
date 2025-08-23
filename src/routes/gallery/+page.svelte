@@ -83,9 +83,9 @@
 	</div>
 	
 	<!-- CTA Section -->
-	<section class="text-center py-12 rounded-3xl bg-gradient-to-r from-primary/10 to-accent/10 border-2 border-primary/20">
-		<h2 class="text-3xl font-bold mb-4 text-primary">Ready to Transform Your Nails?</h2>
-		<p class="text-xl mb-8 max-w-2xl mx-auto text-neutral">Book an appointment today and let's create your perfect nail art!</p>
+	<section class="text-center py-12 rounded-3xl bg-gradient-to-r from-primary-500/10 to-secondary-500/10 border-2 border-primary-500/20">
+		<h2 class="text-3xl font-bold mb-4">Ready to Transform Your Nails?</h2>
+		<p class="text-xl mb-8 max-w-2xl mx-auto text-surface-600-300-token">Book an appointment today and let's create your perfect nail art!</p>
 		<div class="flex flex-col sm:flex-row justify-center gap-4">
 			<button 
 				class="btn variant-filled-primary"
@@ -93,7 +93,7 @@
 			>
 				Book an Appointment
 			</button>
-			<button class="btn variant-outline-tertiary">View Services</button>
+			<a href="/services" class="btn variant-outline-primary">View Services</a>
 		</div>
 	</section>
 </div>

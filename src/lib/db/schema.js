@@ -57,10 +57,39 @@ export const contactMessages = sqliteTable('contact_messages', {
 // Admin users table for authentication
 export const adminUsers = sqliteTable('admin_users', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  username: text('username').notNull().unique(),
+  email: text('email').notNull().unique(),
   passwordHash: text('password_hash').notNull(),
+  role: text('role').default('admin'),
+  isActive: integer('is_active', { mode: 'boolean' }).default(true),
   createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
   lastLogin: text('last_login')
+});
+
+// Content pages table for CMS
+export const contentPages = sqliteTable('content_pages', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  slug: text('slug').notNull().unique(),
+  title: text('title').notNull(),
+  content: text('content').notNull(),
+  metaDescription: text('meta_description'),
+  isPublished: integer('is_published', { mode: 'boolean' }).default(true),
+  createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`)
+});
+
+// Content sections table for flexible content management
+export const contentSections = sqliteTable('content_sections', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  pageSlug: text('page_slug').notNull(),
+  sectionKey: text('section_key').notNull(),
+  sectionType: text('section_type').notNull(), // text, image, gallery, testimonial, etc.
+  title: text('title'),
+  content: text('content'),
+  imageUrl: text('image_url'),
+  sortOrder: integer('sort_order').default(0),
+  isActive: integer('is_active', { mode: 'boolean' }).default(true),
+  createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: text('updated_at').default(sql`CURRENT_TIMESTAMP`)
 });
 
 // Regular users table for nail designer and appointments

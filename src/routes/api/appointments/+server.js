@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { db } from '$lib/db/index.js';
+import { db } from '$lib/db/config.js';
 import { appointments } from '$lib/db/schema.js';
 import { eq, and } from 'drizzle-orm';
 import { 
@@ -191,7 +191,7 @@ export async function POST({ request }) {
 }
 
 /** @type {import('./$types').RequestHandler} */
-export async function PUT({ request }) {
+export async function PATCH({ request }) {
 	try {
 		const { id, status, notes } = await request.json();
 		

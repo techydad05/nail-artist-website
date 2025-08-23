@@ -1,9 +1,9 @@
 <script>
 	import { onMount } from "svelte";
 	import { fly } from "svelte/transition";
+	import { currentTheme, setTheme } from '../stores/theme.js';
 
 	let mounted = false;
-	let currentTheme = "skeleton";
 	let isOpen = false;
 
 	// Skeleton.dev's exact theme configuration
@@ -72,14 +72,10 @@
 
 	onMount(() => {
 		mounted = true;
-		currentTheme =
-			document.documentElement.getAttribute("data-theme") || "modern";
 	});
 
-	function setTheme(themeName) {
-		currentTheme = themeName;
-		document.documentElement.setAttribute("data-theme", themeName);
-		document.body.setAttribute("data-theme", themeName);
+	function handleSetTheme(themeName) {
+		setTheme(themeName);
 		isOpen = false;
 	}
 
@@ -102,7 +98,7 @@
 	}
 
 	$: currentThemeData =
-		themes.find((t) => t.name === currentTheme) || themes[0];
+		themes.find((t) => t.name === $currentTheme) || themes[0];
 </script>
 
 {#if mounted}
@@ -129,11 +125,11 @@
 							{#each themes as theme}
 								<li>
 									<button
-										class="option w-full {currentTheme ===
+										class="option w-full {$currentTheme ===
 										theme.name
 											? '!variant-filled-primary'
 											: ''}"
-										on:click={() => setTheme(theme.name)}
+										on:click={() => handleSetTheme(theme.name)}
 									>
 										<span
 											class="flex-auto text-left flex items-center gap-4"

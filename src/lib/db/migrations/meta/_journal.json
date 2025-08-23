@@ -15,6 +15,13 @@
       "when": 1755142296612,
       "tag": "0001_cultured_micromacro",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1755955018237,
+      "tag": "0002_flowery_valkyrie",
+      "breakpoints": true
     }
   ]
 }
