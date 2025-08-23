@@ -1,0 +1,65 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#be185d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#831843;stop-opacity:1" />
+    </linearGradient>
+    
+    <pattern id="dots" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+      <circle cx="30" cy="30" r="2" fill="white" opacity="0.15"/>
+    </pattern>
+    
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+  
+  <!-- Decorative nail polish bottles -->
+  <g opacity="0.2">
+    <rect x="50" y="50" width="20" height="40" rx="10" fill="white"/>
+    <rect x="45" y="40" width="30" height="15" rx="7" fill="white"/>
+    <rect x="1130" y="540" width="20" height="40" rx="10" fill="white"/>
+    <rect x="1125" y="530" width="30" height="15" rx="7" fill="white"/>
+  </g>
+  
+  <!-- Main content container -->
+  <g transform="translate(600, 315)">
+    <!-- Logo background circle with glow -->
+    <circle cx="0" cy="-115" r="70" fill="white" opacity="0.95" filter="url(#glow)"/>
+    
+    <!-- Nail polish emoji in logo -->
+    <text x="0" y="-85" font-family="Apple Color Emoji, Segoe UI Emoji, sans-serif" font-size="48" text-anchor="middle" fill="#ec4899">💅</text>
+    
+    <!-- Main title -->
+    <text x="0" y="-20" font-family="Montserrat, Arial, sans-serif" font-size="52" fill="white" text-anchor="middle" font-weight="bold" letter-spacing="-1px">Polished Perfection</text>
+    
+    <!-- Tagline -->
+    <text x="0" y="25" font-family="Montserrat, Arial, sans-serif" font-size="26" fill="white" text-anchor="middle" opacity="0.95" font-weight="300">Professional Nail Artistry &amp; Beauty Services</text>
+    
+    <!-- Services line -->
+    <text x="0" y="70" font-family="Montserrat, Arial, sans-serif" font-size="20" fill="white" text-anchor="middle" opacity="0.9">Gel Nails • Nail Art • Manicures • Pedicures</text>
+    
+    <!-- Call to action -->
+    <text x="0" y="110" font-family="Montserrat, Arial, sans-serif" font-size="18" fill="white" text-anchor="middle" opacity="0.85" font-weight="500">Book Your Appointment Today!</text>
+  </g>
+  
+  <!-- Decorative elements -->
+  <g opacity="0.25">
+    <!-- Top right sparkles -->
+    <text x="1050" y="80" font-family="Apple Color Emoji, Segoe UI Emoji, sans-serif" font-size="32" fill="white">✨</text>
+    <text x="1100" y="120" font-family="Apple Color Emoji, Segoe UI Emoji, sans-serif" font-size="28" fill="white">💎</text>
+    
+    <!-- Bottom left flowers -->
+    <text x="80" y="570" font-family="Apple Color Emoji, Segoe UI Emoji, sans-serif" font-size="32" fill="white">🌸</text>
+    <text x="130" y="550" font-family="Apple Color Emoji, Segoe UI Emoji, sans-serif" font-size="28" fill="white">🌺</text>
+  </g>
+</svg>

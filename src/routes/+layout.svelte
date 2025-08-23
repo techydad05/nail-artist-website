@@ -9,6 +9,7 @@
 	import Logo from '../lib/components/Logo.svelte';
 	import ToastContainer from '../lib/components/ToastContainer.svelte';
 	import AppointmentModal from '../lib/components/AppointmentModal.svelte';
+	import SEOHead from '../lib/components/SEOHead.svelte';
 	
 	initializeStores();
 	const modalStore = getModalStore();
@@ -36,6 +37,9 @@
 		});
 	}
 </script>
+
+<!-- SEO Meta Tags -->
+<SEOHead />
 
 <!-- Modern Header -->
 <header class="sticky top-0 z-50 w-full border-b border-surface-300-600-token bg-surface-50-900-token/90 backdrop-blur-md shadow-sm">
